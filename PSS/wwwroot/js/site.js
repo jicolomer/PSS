@@ -181,7 +181,7 @@ function crearUsuario(action) {
                         window.location.href = "Index";
                     }
                     else {
-                        $('#mensajenuevo').html("No se  puede guardar el usuario. <br/>Seleccione un rol. <br/> Ingrese un email correcto. <br/> El password debe tener de 6-100 caracteres, al menos un caracter especial, una letra mayúscula y un número");
+                        $('#mensajenuevo').html("No se puede guardar el usuario. <br/>Seleccione un rol. <br/> Ingrese un email correcto. <br/> El password debe tener de 6-100 caracteres, al menos un caracter especial, una letra mayúscula y un número");
                     }
                 }
             });
