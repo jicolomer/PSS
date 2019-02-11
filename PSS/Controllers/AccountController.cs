@@ -245,33 +245,47 @@ namespace PSS.Controllers
                             await _userManager.AddToRoleAsync(user, "Administrador");
                             await _signInManager.SignInAsync(user, isPersistent: false);
                             _logger.LogInformation("User created a new account with password.");
-
                         }
                     }
                     else
                     {
+                        try
+                        {
+                            var role = new IdentityRole("Técnico");
+                            var res = await _roleManager.CreateAsync(role);
+
+                            role = new IdentityRole("Usuario");
+                            res = await _roleManager.CreateAsync(role);
+                        }
+                        catch (Exception)
+                        {
+
+                            throw;
+                        }
+
                         await _userManager.AddToRoleAsync(user, "Usuario");
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation("User created a new account with password.");
                     }
 
-                    // Vamos a registrar otro roles    
-                    xRol = await _roleManager.RoleExistsAsync("Usuario");
-                    if (!xRol)
-                    {
-                        var role = new IdentityRole();
-                        role.Name = "Usuario";
-                        await _roleManager.CreateAsync(role);
 
-                    }
+                    //// Vamos a registrar otro roles    
+                    //xRol = await _roleManager.RoleExistsAsync("Usuario");
+                    //if (!xRol)
+                    //{
+                    //    var role = new IdentityRole();
+                    //    role.Name = "Usuario";
+                    //    await _roleManager.CreateAsync(role);
+
+                    //}
    
-                    xRol = await _roleManager.RoleExistsAsync("Asistente");
-                    if (!xRol)
-                    {
-                        var role = new IdentityRole();
-                        role.Name = "Asistente";
-                        await _roleManager.CreateAsync(role);
-                    }
+                    //xRol = await _roleManager.RoleExistsAsync("Asistente");
+                    //if (!xRol)
+                    //{
+                    //    var role = new IdentityRole();
+                    //    role.Name = "Asistente";
+                    //    await _roleManager.CreateAsync(role);
+                    //}
 
                     return RedirectToLocal(returnUrl);
                 }

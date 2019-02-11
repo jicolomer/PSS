@@ -143,7 +143,7 @@ namespace PSS.Controllers
 
                 if (selectRole == "No Role")
                 {
-                    selectRole = "Técnico";
+                    selectRole = "No Role";
                 }
 
                 //Ahora si almacenamos el rol
