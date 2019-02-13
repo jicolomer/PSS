@@ -119,7 +119,7 @@ function editarUsuario(action) {
         },
         success: function (response) {
             if (response == "Save") {
-                window.location.href = "Index";
+                window.location.href = "Usuarios/Index";
             }
             else {
                 alert("No se puede editar los datos del usuario");
@@ -142,7 +142,7 @@ function eliminarUsuario(action) {
         data: { id },
         success: function (response) {
             if (response === "Delete") {
-                window.location.href = "Index";
+                window.location.href = "Usuarios/Index";
             }
             else {
                 alert("No se puede eliminar el registro");
@@ -178,7 +178,7 @@ function crearUsuario(action) {
                 },
                 success: function (response) {
                     if (response === "Save") {
-                        window.location.href = "Index";
+                        window.location.href = "Usuarios/Index";
                     }
                     else {
                         $('#mensajenuevo').html("No se puede guardar el usuario. <br/>Seleccione un rol. <br/> Ingrese un email correcto. <br/> El password debe tener de 6-100 caracteres, al menos un caracter especial, una letra mayúscula y un número");
