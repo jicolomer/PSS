@@ -16,6 +16,7 @@ function getUsuario(id,action) {
 }
 var items;
 var j = 0;
+var j2= 0;
 //Variables globales por cada propiedad del usuario
 var id;
 var userName;
@@ -159,7 +160,7 @@ function crearUsuario(action) {
     role = document.getElementById('SelectNuevo');
     selectRole = role.options[role.selectedIndex].text;
     empresa = document.getElementById('SelectEmpresasNuevo');
-    selectEmpresa = empresa.options[empresa.selectedIndex].text;
+    selectEmpresa = empresa.value;
 
     //Vamos a validar ahora que los datos del usuario no estén vacíos
     if (email == "") {
@@ -199,12 +200,12 @@ function getEmpresas(action) {
         url: action,
         data: {},
         success: function (response) {
-            if (j == 0) {
+            if (j2 == 0) {
                 for (var i = 0; i < response.length; i++) {
                     document.getElementById('SelectEmpresas').options[i] = new Option(response[i].text, response[i].value);
                     document.getElementById('SelectEmpresasNuevo').options[i] = new Option(response[i].text, response[i].value);
                 }
-                j = 1;
+                j2 = 1;
             }
         }
     });
