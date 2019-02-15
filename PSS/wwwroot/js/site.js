@@ -158,6 +158,8 @@ function crearUsuario(action) {
     passwordHash = $('input[name=PasswordHashNuevo]')[0].value;
     role = document.getElementById('SelectNuevo');
     selectRole = role.options[role.selectedIndex].text;
+    empresa = document.getElementById('SelectEmpresasNuevo');
+    selectEmpresa = empresa.options[empresa.selectedIndex].text;
 
     //Vamos a validar ahora que los datos del usuario no estén vacíos
     if (email == "") {
@@ -174,7 +176,7 @@ function crearUsuario(action) {
                 type: "POST",
                 url: action,
                 data: {
-                    email, phoneNumber, passwordHash, selectRole
+                    email, phoneNumber, passwordHash, selectRole, selectEmpresa
                 },
                 success: function (response) {
                     if (response === "Save") {
@@ -188,4 +190,22 @@ function crearUsuario(action) {
         }
     }
 
+}
+
+
+function getEmpresas(action) {
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {},
+        success: function (response) {
+            if (j == 0) {
+                for (var i = 0; i < response.length; i++) {
+                    document.getElementById('SelectEmpresas').options[i] = new Option(response[i].text, response[i].value);
+                    document.getElementById('SelectEmpresasNuevo').options[i] = new Option(response[i].text, response[i].value);
+                }
+                j = 1;
+            }
+        }
+    });
 }

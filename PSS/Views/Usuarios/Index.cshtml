@@ -12,18 +12,21 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    Usuario
-                </th>
-                <th>
-                    Rol
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    Teléfono
-                </th>
+            <th>
+                Usuario
+            </th>
+            <th>
+                Rol
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Teléfono
+            </th>
+            <th>
+                Empresa
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -43,8 +46,11 @@
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Empresa)
+            </td>
+            <td>
                 <a class="btn btn-success" data-toggle="modal" data-target="#modalEditar" onclick="getUsuario('@item.Id','Usuarios/GetUsuario')">Editar</a> |
-                <a class="btn btn-info" data-toggle="modal" data-target="#modalDetalle" onclick="getUsuario('@item.Id','Usuarios/GetUsuario')"  >Detalles</a> |
+                <a class="btn btn-info" data-toggle="modal" data-target="#modalDetalle" onclick="getUsuario('@item.Id','Usuarios/GetUsuario')">Detalles</a> |
                 <a class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar" onclick="getUsuario('@item.Id','Usuarios/GetUsuario')">Eliminar</a>
             </td>
         </tr>
@@ -67,12 +73,18 @@
                     <input type="hidden" name="Id" id="Id" />
                     <div class="form-group">
                         <label for="UserName" class="control-label">Usuario</label>
-                        <input readonly name="UserName" id="UserName"  class="form-control" />
+                        <input readonly name="UserName" id="UserName" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label for="Roles" class="control-label">Roles</label>
                         <select id="Select" name="Select" class="form-control" onclick="getRoles('Usuarios/GetRoles');">
                             <option value="0">Seleccione un rol</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Empresas" class="control-label">Empresas</label>
+                        <select id="SelectEmpresas" name="SelectEmpresas" class="form-control" onclick="getEmpresas('Empresas/GetEmpresas');">
+                            <option value="0">Seleccione una empresa</option>
                         </select>
                     </div>
 
@@ -168,6 +180,12 @@
                         <label for="Roles" class="control-label">Roles</label>
                         <select id="SelectNuevo" name="SelectNuevo" class="form-control" onclick="getRoles('Usuarios/GetRoles');">
                             <option value="0">Seleccione un rol</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Empresas" class="control-label">Empresas</label>
+                        <select id="SelectEmpresasNuevo" name="SelectEmpresasNuevo" class="form-control" onclick="getEmpresas('Empresas/GetEmpresas');">
+                            <option value="0">Seleccione una Empresa</option>
                         </select>
                     </div>
 

@@ -15,9 +15,13 @@ namespace PSS.Controllers
     {
         private readonly ApplicationDbContext _context;
         UserManager<ApplicationUser> _userManager;
+
         RoleManager<IdentityRole> _roleManager;
+        
         UsuarioRole _usuarioRole;
+
         public List<SelectListItem> usuarioRole;
+        public List<SelectListItem> usuarioEmpresa;
 
         public UsuariosController(ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
@@ -28,6 +32,7 @@ namespace PSS.Controllers
             _roleManager = roleManager;
             _usuarioRole = new UsuarioRole();
             usuarioRole = new List<SelectListItem>();
+
         }
 
         // GET: Usuarios
@@ -46,15 +51,23 @@ namespace PSS.Controllers
             {
                 ID = Data.Id;
                 usuarioRole = await _usuarioRole.GetRole(_userManager,_roleManager,ID);
-
-                usuario.Add(new Usuario() {
-                    Id=Data.Id,
+                List<SelectListItem> usuarioEmpresa = new List<SelectListItem>();
+                UsuarioEmpresaController uec = new UsuarioEmpresaController(_context);
+                EmpresasController ec = new EmpresasController(_context);
+                UsuarioEmpresa ue = new UsuarioEmpresa();
+                List<UsuarioEmpresa> _usuarioEmpresa = await uec.GetEmpresaByUser(ID);
+                List<Empresa> empresa = await ec.GetEmpresaByID(_usuarioEmpresa[0].EmpresaId); 
+                    usuario.Add(new Usuario() {
+                    Id = Data.Id,
                     UserName = Data.UserName,
                     PhoneNumber = Data.PhoneNumber,
                     Email = Data.Email,
-                    Role = usuarioRole[0].Text
+                    Role = usuarioRole[0].Text,
+                    EmpresaId = _usuarioEmpresa[0].EmpresaId.ToString(),
+                    Empresa = empresa[0].Nombre
 
-                });
+
+                    });
             }
             return View(usuario.ToList());
             //return View(await _context.ApplicationUser.ToListAsync());
@@ -178,7 +191,7 @@ namespace PSS.Controllers
 
         public async Task<String> CreateUsuario(string email,
             string phoneNumber, string passwordHash, 
-            string selectRole, ApplicationUser applicationUser)
+            string selectRole, string selectEmpresa, ApplicationUser applicationUser)
         {
             var resp = "";
             applicationUser = new ApplicationUser
@@ -192,6 +205,24 @@ namespace PSS.Controllers
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(applicationUser, selectRole);
+
+
+                //añado la empresa
+                UsuarioEmpresa ue = new UsuarioEmpresa();
+                ue.Id = applicationUser.Id;
+                ue.EmpresaId = int.Parse(selectEmpresa);
+                UsuarioEmpresaController uec = new UsuarioEmpresaController(_context);
+                try
+                {
+                    uec.Create(ue);
+                }
+                catch (Exception ex)
+                {
+                    resp = "NoSave";
+                }
+
+
+
                 resp = "Save";
             }
             else

@@ -25,6 +25,24 @@ namespace PSS.Controllers
             return View(await _context.Empresa.ToListAsync());
         }
 
+        public List<SelectListItem> GetEmpresas()
+        {
+            List<SelectListItem> Empr = new List<SelectListItem> ();
+            var empresas = _context.Empresa.ToList();
+            foreach (var Data in empresas)
+            {
+                Empr.Add(new SelectListItem()
+                {
+                    Value = Data.EmpresaId.ToString(),
+                    Text = Data.Nombre
+                });
+
+            }
+            return Empr;
+
+        }
+
+
         // GET: Empresas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -39,7 +57,6 @@ namespace PSS.Controllers
             {
                 return NotFound();
             }
-
             return View(empresa);
         }
 
@@ -149,5 +166,40 @@ namespace PSS.Controllers
         {
             return _context.Empresa.Any(e => e.EmpresaId == id);
         }
+
+        public async Task<List<Empresa>> GetEmpresaByID(int id)
+        {
+            try
+            {
+
+                List<Empresa> empresa = new List<Empresa>();
+
+                if (id == 0)
+                {
+                    empresa.Add(new Empresa()
+                    {
+                        EmpresaId = 0,
+                        Nombre = "Sin empresa asociada"
+                    });
+                }
+                else
+                {
+                    var appEmpresa = await _context.Empresa.SingleOrDefaultAsync(m => m.EmpresaId == id);
+
+                    empresa.Add(new Empresa()
+                    {
+                        EmpresaId = appEmpresa.EmpresaId,
+                        Nombre = appEmpresa.Nombre
+                    });
+                }
+                return empresa;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
     }
 }

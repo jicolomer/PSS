@@ -1,0 +1,22 @@
+﻿        public async Task<List<UsuarioEmpresa>> GetEmpresaByUser(string id)
+        {
+            try
+            {
+
+                List<UsuarioEmpresa> empresa = new List<UsuarioEmpresa>();
+                var appUsuarioEmpresa = await _context.UsuarioEmpresa.SingleOrDefaultAsync(m => m.Id == id);
+
+                empresa.Add(new UsuarioEmpresa()
+                {
+                    Id = appUsuarioEmpresa.Id,
+                    EmpresaId = appUsuarioEmpresa.EmpresaId
+                });
+                return empresa;
+            }
+            catch (Exception)
+            {
+                string a = "2";
+                throw;
+            }
+
+        }

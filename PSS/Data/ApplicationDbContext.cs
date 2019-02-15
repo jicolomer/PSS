@@ -26,5 +26,8 @@ namespace PSS.Data
         public DbSet<PSS.Models.ApplicationUser> ApplicationUser { get; set; }
 
         public DbSet<PSS.Models.Empresa> Empresa { get; set; }
+
+        public DbSet<PSS.Models.UsuarioEmpresa> UsuarioEmpresa { get; set; }
+
     }
 }

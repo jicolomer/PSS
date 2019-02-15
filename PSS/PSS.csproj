@@ -5,6 +5,24 @@
     <UserSecretsId>aspnet-PSS-1EC7A25F-0FCA-4CD7-991F-15456895BBB9</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20190214123819_nextry.cs" />
+    <Compile Remove="Migrations\20190214123819_nextry.Designer.cs" />
+    <Compile Remove="Migrations\20190214123849_nextry2.cs" />
+    <Compile Remove="Migrations\20190214123849_nextry2.Designer.cs" />
+    <Compile Remove="Migrations\20190214124557_nextry4.cs" />
+    <Compile Remove="Migrations\20190214124557_nextry4.Designer.cs" />
+    <Compile Remove="Migrations\20190215094445_try.cs" />
+    <Compile Remove="Migrations\20190215094445_try.Designer.cs" />
+    <Compile Remove="Migrations\20190215100206_UsuarioEmpresa.cs" />
+    <Compile Remove="Migrations\20190215100206_UsuarioEmpresa.Designer.cs" />
+    <Compile Remove="Migrations\20190215112408_UsuarioEmpresa2.cs" />
+    <Compile Remove="Migrations\20190215112408_UsuarioEmpresa2.Designer.cs" />
+    <Compile Remove="Migrations\20190215114847_clear.cs" />
+    <Compile Remove="Migrations\20190215114847_clear.Designer.cs" />
+    <Compile Remove="Migrations\PSSContextModelSnapshot.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
@@ -16,6 +34,10 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

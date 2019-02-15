@@ -26,5 +26,7 @@ namespace PSS.Models
         public string Role { get; set; }
         public string RoleId { get; set; }
 
+        public string EmpresaId { get; set; }
+        public string Empresa { get; set; }
     }
 }
