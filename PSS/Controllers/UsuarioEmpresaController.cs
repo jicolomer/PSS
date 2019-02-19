@@ -49,6 +49,8 @@ namespace PSS.Controllers
             return View();
         }
 
+
+
         // POST: UsuarioEmpresa/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -60,6 +62,20 @@ namespace PSS.Controllers
             {
                 _context.Add(usuarioEmpresa);
                 await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(usuarioEmpresa);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,EmpresaId")] UsuarioEmpresa usuarioEmpresa, Boolean saveChanges)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(usuarioEmpresa);
+                if (saveChanges) await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(usuarioEmpresa);
@@ -139,9 +155,47 @@ namespace PSS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var usuarioEmpresa = await _context.UsuarioEmpresa.SingleOrDefaultAsync(m => m.Id == id);
-            _context.UsuarioEmpresa.Remove(usuarioEmpresa);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var usuarioEmpresa = await _context.UsuarioEmpresa.SingleOrDefaultAsync(m => m.Id == id);
+                if (usuarioEmpresa != null)
+                {
+                    _context.UsuarioEmpresa.Remove(usuarioEmpresa);
+                    await _context.SaveChangesAsync();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                String e = ex.Message;
+                throw;
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        // POST: UsuarioEmpresa/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id, Boolean saveChanges)
+        {
+            try
+            {
+                var usuarioEmpresa = await _context.UsuarioEmpresa.SingleOrDefaultAsync(m => m.Id == id);
+                if (usuarioEmpresa != null)
+                {
+                    _context.UsuarioEmpresa.Remove(usuarioEmpresa);
+                    if (saveChanges) await _context.SaveChangesAsync();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                String e = ex.Message;
+                throw;
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

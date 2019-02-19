@@ -45,7 +45,9 @@ function mostrarUsuario(response) {
     j = 0;
     for (var i = 0; i < 3; i++) {
         var x = document.getElementById('Select');
+        var x2 = document.getElementById('SelectEmpresas');
         x.remove(i);
+        x2.remove(i);
     }
 
     $.each(items, function (index, val) {
@@ -54,12 +56,14 @@ function mostrarUsuario(response) {
         $('input[name=Email]').val(val.email);
         $('input[name=PhoneNumber]').val(val.phoneNumber);
         document.getElementById('Select').options[0] = new Option(val.role, val.roleId);
+        document.getElementById('SelectEmpresas').options[0] = new Option(val.empresa, val.empresaId);
 
         //Mostrar los detalles del usuario
         $("#dEmail").text(val.email);
         $("#dUserName").text(val.userName);
         $("#dPhoneNumber").text(val.phoneNumber);
         $("#dRole").text(val.role);
+        $("#dEmpresa").text(val.empresa);
 
         //Mostrar los datos del usuario que deseo eliminar
         $("#eUsuario").text(val.email);
@@ -93,7 +97,8 @@ function editarUsuario(action) {
     phoneNumber = $('input[name=PhoneNumber]')[0].value;
     role = document.getElementById('Select');
     selectRole = role.options[role.selectedIndex].text;
-
+    empresa = document.getElementById('SelectEmpresas');
+    selectEmpresa = empresa.value;
 
     $.each(items, function (index, val) {
         accessFailedCount = val.accessFailedCount;
@@ -116,11 +121,11 @@ function editarUsuario(action) {
             id, userName, email, phoneNumber, accessFailedCount,
             concurrencyStamp, emailConfirmed, lockoutEnabled, lockoutEnd,
             normalizedEmail, normalizedUserName, passwordHash, phoneNumberConfirmed,
-            securityStamp, twoFactorEnabled,selectRole
+            securityStamp, twoFactorEnabled,selectRole, selectEmpresa
         },
         success: function (response) {
             if (response == "Save") {
-                window.location.href = "Usuarios/Index";
+                window.location.href = "Usuarios";
             }
             else {
                 alert("No se puede editar los datos del usuario");
@@ -143,7 +148,7 @@ function eliminarUsuario(action) {
         data: { id },
         success: function (response) {
             if (response === "Delete") {
-                window.location.href = "Usuarios/Index";
+                window.location.href = "Usuarios";
             }
             else {
                 alert("No se puede eliminar el registro");
@@ -181,7 +186,7 @@ function crearUsuario(action) {
                 },
                 success: function (response) {
                     if (response === "Save") {
-                        window.location.href = "Usuarios/Index";
+                        window.location.href = "Usuarios";
                     }
                     else {
                         $('#mensajenuevo').html("No se puede guardar el usuario. <br/>Seleccione un rol. <br/> Ingrese un email correcto. <br/> El password debe tener de 6-100 caracteres, al menos un caracter especial, una letra mayúscula y un número");

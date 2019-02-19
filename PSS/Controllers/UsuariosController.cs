@@ -7,17 +7,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PSS.Data;
 using PSS.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 
 namespace PSS.Controllers
 {
     public class UsuariosController : Controller
     {
+        private readonly ApplicationDbContext _context2;
         private readonly ApplicationDbContext _context;
         UserManager<ApplicationUser> _userManager;
-
         RoleManager<IdentityRole> _roleManager;
-        
         UsuarioRole _usuarioRole;
 
         public List<SelectListItem> usuarioRole;
@@ -28,6 +28,7 @@ namespace PSS.Controllers
             RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            _context2 = context;
             _userManager = userManager;
             _roleManager = roleManager;
             _usuarioRole = new UsuarioRole();
@@ -79,6 +80,11 @@ namespace PSS.Controllers
             List<Usuario> usuario = new List<Usuario>();
             var appUsuario = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
             usuarioRole = await _usuarioRole.GetRole(_userManager, _roleManager, id);
+            UsuarioEmpresaController uec = new UsuarioEmpresaController(_context);
+            EmpresasController ec = new EmpresasController(_context);
+            //saco el idempresa
+            List<UsuarioEmpresa> ue = await  uec.GetEmpresaByUser(appUsuario.Id);
+            List<Empresa> empresa = await ec.GetEmpresaByID(ue[0].EmpresaId);
 
             usuario.Add(new Usuario() {
                 Id = appUsuario.Id,
@@ -97,7 +103,9 @@ namespace PSS.Controllers
                 PasswordHash = appUsuario.PasswordHash,
                 PhoneNumberConfirmed = appUsuario.PhoneNumberConfirmed,
                 SecurityStamp = appUsuario.SecurityStamp,
-                TwoFactorEnabled = appUsuario.TwoFactorEnabled
+                TwoFactorEnabled = appUsuario.TwoFactorEnabled,
+                Empresa = empresa[0].Nombre,
+                EmpresaId = ue[0].EmpresaId.ToString()
 
             });
             return usuario;
@@ -117,7 +125,8 @@ namespace PSS.Controllers
            string phoneNumber, int accessFailedCount, string concurrencyStamp, bool emailConfirmed,
            bool lockoutEnabled, DateTimeOffset lockoutEnd, string normalizedEmail,
            string normalizedUserName, string passwordHash, bool phoneNumberConfirmed,
-           string securityStamp, bool twoFactorEnabled,string selectRole, ApplicationUser applicationUser)
+           string securityStamp, bool twoFactorEnabled,string selectRole, ApplicationUser applicationUser, 
+           string selectEmpresa)
         {
             var resp = "";
             try
@@ -149,6 +158,7 @@ namespace PSS.Controllers
 
                 usuarioRole = await _usuarioRole.GetRole(_userManager, _roleManager, id);
 
+
                 if (usuarioRole[0].Text != "No Role")
                 {
                     await _userManager.RemoveFromRoleAsync(usuario, usuarioRole[0].Text);
@@ -161,10 +171,30 @@ namespace PSS.Controllers
 
                 //Ahora si almacenamos el rol
                 var resultado = await _userManager.AddToRoleAsync(usuario, selectRole);
-                
+
+                await _context.SaveChangesAsync();
+
+                try
+                {
+
+                    UsuarioEmpresa ue = new UsuarioEmpresa();
+                    ue.Id = applicationUser.Id;
+                    ue.EmpresaId = int.Parse(selectEmpresa);
+                    _context.UsuarioEmpresa.Update(ue);
+
+                    await _context.SaveChangesAsync();
+
+
+                }
+                catch (Exception ex)
+                {
+                    resp = "NoSave";
+                }
+
+
                 resp = "Save";
             }
-            catch (Exception ex )
+            catch (Exception ex2 )
             {
                 resp = "No Save";
 
@@ -172,17 +202,37 @@ namespace PSS.Controllers
             return resp;
 
         }
+
+
+
         public async Task<String> DeleteUsuario(string id)
         {
             var resp = "";
             try
             {
+
                 var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
                 _context.ApplicationUser.Remove(applicationUser);
+
                 await _context.SaveChangesAsync();
-                resp = "Delete";
+                try
+                {
+                    UsuarioEmpresa ue = new UsuarioEmpresa();
+                    ue.Id = id;
+                    _context.UsuarioEmpresa.Remove(ue);
+                    await _context.SaveChangesAsync();
+                    resp = "Delete";
+                }
+                catch (Exception exxxc)
+                {
+                    if (exxxc.Message.Contains ("row")) resp = "Delete";
+                    else resp = "NODelete";
+                }
+
+
+
             }
-            catch
+            catch(Exception exx)
             {
                 resp = "NoDelete";
             }
@@ -220,8 +270,6 @@ namespace PSS.Controllers
                 {
                     resp = "NoSave";
                 }
-
-
 
                 resp = "Save";
             }
