@@ -28,6 +28,12 @@ namespace PSS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add MVC services to the services container.
+            services.AddMvc();
+            services.AddResponseCaching(); // Adds a default in-memory implementation of     IDistributedCache
+            services.AddSession();
+
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -59,12 +65,21 @@ namespace PSS
 
             app.UseAuthentication();
 
+            app.UseStaticFiles();
+
+            //enable session before MVC
+            app.UseSession();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-        }
+
+
+
+
+    }
     }
 }

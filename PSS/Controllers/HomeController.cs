@@ -6,13 +6,53 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PSS.Models;
 using Microsoft.AspNetCore.Authorization;
+using PSS.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
+using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace PSS.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly ApplicationDbContext _context;
+        UserManager<ApplicationUser> _userManager;
+        RoleManager<IdentityRole> _roleManager;
+        UsuarioRole _usuarioRole;
+        public List<SelectListItem> usuarioRole;
+        public List<SelectListItem> usuarioEmpresa;
+
+        public HomeController(ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
+        {
+            _context = context;
+            _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _usuarioRole = new UsuarioRole();
+            usuarioRole = new List<SelectListItem>();
+        }
+
+
         public IActionResult Index()
         {
+
+            if (User.Identity.Name != null)
+            {
+                //Obtengo la empresa y la meto en el Session
+
+                String nombreUsuario = User.Identity.Name;
+                var appUsuario = _context.ApplicationUser.SingleOrDefault(m => m.UserName == nombreUsuario);
+                var appUsuarioEmpresa = _context.UsuarioEmpresa.SingleOrDefault(m => m.Id == appUsuario.Id);
+                var nombreEmpresa = _context.Empresa.SingleOrDefault(m => m.EmpresaId == appUsuarioEmpresa.EmpresaId);
+                HttpContext.Session.SetString("Empresa", nombreEmpresa.Nombre);
+
+                ViewData["Nombre"] = nombreEmpresa.Nombre;
+            }
             return View();
         }
 

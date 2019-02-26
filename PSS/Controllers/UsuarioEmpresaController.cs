@@ -209,7 +209,6 @@ namespace PSS.Controllers
             List<UsuarioEmpresa> empresa = new List<UsuarioEmpresa>();
             try
             {
-
                 var appUsuarioEmpresa = await _context.UsuarioEmpresa.SingleOrDefaultAsync(m => m.Id == id);
 
                 empresa.Add(new UsuarioEmpresa()

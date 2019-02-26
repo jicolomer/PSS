@@ -14,7 +14,6 @@ namespace PSS.Controllers
 {
     public class UsuariosController : Controller
     {
-        private readonly ApplicationDbContext _context2;
         private readonly ApplicationDbContext _context;
         UserManager<ApplicationUser> _userManager;
         RoleManager<IdentityRole> _roleManager;
@@ -28,7 +27,6 @@ namespace PSS.Controllers
             RoleManager<IdentityRole> roleManager)
         {
             _context = context;
-            _context2 = context;
             _userManager = userManager;
             _roleManager = roleManager;
             _usuarioRole = new UsuarioRole();
