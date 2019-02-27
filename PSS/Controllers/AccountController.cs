@@ -241,24 +241,31 @@ namespace PSS.Controllers
                     if (!xRol)
                     {
                         var role = new IdentityRole("Administrador");
+
                         var res = await _roleManager.CreateAsync(role);
+
+                        role = new IdentityRole("Técnico");
+                        res = await _roleManager.CreateAsync(role);
+
+                        role = new IdentityRole("Usuario");
+                        res = await _roleManager.CreateAsync(role);
 
                         if (res.Succeeded)
                         {
-                            await _userManager.AddToRoleAsync(user, "Administrador");
+                            await _userManager.AddToRoleAsync(user, "Usuario");
                             await _signInManager.SignInAsync(user, isPersistent: false);
                             _logger.LogInformation("User created a new account with password.");
                         }
+
+
+
+
                     }
                     else
                     {
                         try
                         {
-                            var role = new IdentityRole("Técnico");
-                            var res = await _roleManager.CreateAsync(role);
 
-                            role = new IdentityRole("Usuario");
-                            res = await _roleManager.CreateAsync(role);
                         }
                         catch (Exception)
                         {

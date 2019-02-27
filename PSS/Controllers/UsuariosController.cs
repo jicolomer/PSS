@@ -178,9 +178,21 @@ namespace PSS.Controllers
                     UsuarioEmpresa ue = new UsuarioEmpresa();
                     ue.Id = applicationUser.Id;
                     ue.EmpresaId = int.Parse(selectEmpresa);
-                    _context.UsuarioEmpresa.Update(ue);
 
-                    await _context.SaveChangesAsync();
+                    try
+                    {
+                        _context.UsuarioEmpresa.Add(ue);
+
+                        await _context.SaveChangesAsync();
+
+                    }
+                    catch (Exception)
+                    {
+
+                        _context.UsuarioEmpresa.Update(ue);
+
+                        await _context.SaveChangesAsync();
+                    }
 
 
                 }

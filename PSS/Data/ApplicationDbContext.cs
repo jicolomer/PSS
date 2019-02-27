@@ -29,5 +29,7 @@ namespace PSS.Data
 
         public DbSet<PSS.Models.UsuarioEmpresa> UsuarioEmpresa { get; set; }
 
+        public DbSet<PSS.Models.Proyectos> Proyectos { get; set; }
+
     }
 }

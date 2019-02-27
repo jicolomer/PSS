@@ -6,6 +6,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20171002171954_[Migracion-inicial].cs" />
+    <Compile Remove="Data\Migrations\20171002171954_[Migracion-inicial].Designer.cs" />
+    <Compile Remove="Data\Migrations\20190211175225_[Usuarios].cs" />
+    <Compile Remove="Data\Migrations\20190211175225_[Usuarios].Designer.cs" />
+    <Compile Remove="Data\Migrations\20190213105425_Empresas.cs" />
+    <Compile Remove="Data\Migrations\20190213105425_Empresas.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190213124425_PSSDatabase.cs" />
+    <Compile Remove="Data\Migrations\20190213124425_PSSDatabase.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190215123810_one.cs" />
+    <Compile Remove="Data\Migrations\20190215123810_one.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190215143131_UsuarioEmpresa2.cs" />
+    <Compile Remove="Data\Migrations\20190215143131_UsuarioEmpresa2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190226154225_Proyectos4.cs" />
+    <Compile Remove="Data\Migrations\20190226154225_Proyectos4.Designer.cs" />
     <Compile Remove="Migrations\20190214123819_nextry.cs" />
     <Compile Remove="Migrations\20190214123819_nextry.Designer.cs" />
     <Compile Remove="Migrations\20190214123849_nextry2.cs" />
@@ -20,14 +36,14 @@
     <Compile Remove="Migrations\20190215112408_UsuarioEmpresa2.Designer.cs" />
     <Compile Remove="Migrations\20190215114847_clear.cs" />
     <Compile Remove="Migrations\20190215114847_clear.Designer.cs" />
+    <Compile Remove="Migrations\20190226134934_Proyectos.cs" />
+    <Compile Remove="Migrations\20190226134934_Proyectos.Designer.cs" />
+    <Compile Remove="Migrations\20190226152813_Proyectos2.cs" />
+    <Compile Remove="Migrations\20190226152813_Proyectos2.Designer.cs" />
+    <Compile Remove="Migrations\20190226153201_Proyectos3.cs" />
+    <Compile Remove="Migrations\20190226153201_Proyectos3.Designer.cs" />
     <Compile Remove="Migrations\PSSContextModelSnapshot.cs" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />
+    <Compile Remove="Models\PSSContext_old.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,7 +53,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
   </ItemGroup>
 
 </Project>

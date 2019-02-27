@@ -11,9 +11,10 @@ using System;
 namespace PSS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190227134904_Proyectos1000")]
+    partial class Proyectos1000
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,7 +258,7 @@ namespace PSS.Migrations
 
                     b.Property<string>("Encargado");
 
-                    b.Property<int>("IdEmpre");
+                    b.Property<int>("IdEmpresa");
 
                     b.Property<bool>("InstProviAreasAux");
 

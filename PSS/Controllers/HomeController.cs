@@ -48,10 +48,17 @@ namespace PSS.Controllers
                 String nombreUsuario = User.Identity.Name;
                 var appUsuario = _context.ApplicationUser.SingleOrDefault(m => m.UserName == nombreUsuario);
                 var appUsuarioEmpresa = _context.UsuarioEmpresa.SingleOrDefault(m => m.Id == appUsuario.Id);
-                var nombreEmpresa = _context.Empresa.SingleOrDefault(m => m.EmpresaId == appUsuarioEmpresa.EmpresaId);
-                HttpContext.Session.SetString("Empresa", nombreEmpresa.Nombre);
+                try
+                {
 
-                ViewData["Nombre"] = nombreEmpresa.Nombre;
+                    var nombreEmpresa = _context.Empresa.SingleOrDefault(m => m.EmpresaId == appUsuarioEmpresa.EmpresaId);
+                    HttpContext.Session.SetString("Empresa", nombreEmpresa.Nombre);
+
+                    ViewData["Nombre"] = "Empresa: " + nombreEmpresa.Nombre;
+                }
+                catch (Exception)
+                {
+                }
             }
             return View();
         }
