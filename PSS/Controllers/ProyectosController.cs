@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PSS.Data;
 using PSS.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace PSS.Controllers
 {
@@ -46,6 +47,8 @@ namespace PSS.Controllers
         // GET: Proyectos/Create
         public IActionResult Create()
         {
+            ViewData["Empresa"] = HttpContext.Session.GetString("Empresa");
+            ViewData["IdEmpresa"] = HttpContext.Session.GetString("IdEmpresa");
             return View();
         }
 

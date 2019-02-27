@@ -53,6 +53,7 @@ namespace PSS.Controllers
 
                     var nombreEmpresa = _context.Empresa.SingleOrDefault(m => m.EmpresaId == appUsuarioEmpresa.EmpresaId);
                     HttpContext.Session.SetString("Empresa", nombreEmpresa.Nombre);
+                    HttpContext.Session.SetString("IdEmpresa", nombreEmpresa.EmpresaId.ToString());
 
                     ViewData["Nombre"] = "Empresa: " + nombreEmpresa.Nombre;
                 }
