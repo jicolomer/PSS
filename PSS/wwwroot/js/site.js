@@ -38,8 +38,6 @@ var phoneNumberConfirmed;
 var securityStamp;
 var twoFactorEnabled;
 
-
-
 function mostrarUsuario(response) {
     items = response;
     j = 0;
@@ -71,7 +69,6 @@ function mostrarUsuario(response) {
 
     });
 }
-
 
 function getRoles(action) {
     $.ajax({
@@ -197,7 +194,6 @@ function crearUsuario(action) {
     }
 
 }
-
 
 function getEmpresas(action) {
     $.ajax({

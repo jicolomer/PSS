@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<PSS.Models.Proyectos>
-
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Index";
 }
@@ -10,144 +10,152 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdEmpre)
-            </th>
+            @if (Context.Session.GetString("Rol") == "Administrador")
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.IdEmpre)
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.NombreObra)
             </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.TipoEstudio)
+            </th>
+
+
+
             <!--                <th>
-                        @Html.DisplayNameFor(model => model.NumOt)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Cliente)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DireccionObra)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CiudadObra)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ProvinciaObra)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CpObra)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Promotor)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.AutorProyecto)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Tecnico)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.PemPec)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Presupuesto)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Duracion)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Autor)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CssfaseProyecto)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.NumTrabajadores)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Contratista)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DireccionContratista)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CiudadContratista)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ProvinciaContratista)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CpContratista)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.JefeObra)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Encargado)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.RecursoPreventivo)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TipoObra)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DescripcionObra)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DescripcionLugar)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Superficie)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LinderoNorte)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LinderoSur)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LinderoEste)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LinderoOeste)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TraficoRodado)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Climatologia)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CaracteristicasTerreno)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.AccesosRodados)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CirculacionesPeatonales)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LinElectAereas)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LinElectEnterradas)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Transformadores)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LineasTelefonicas)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ConduccionesGas)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Alcantarillado)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.InstProviAreasAux)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TipoEstudio)
-                    </th>-->
+                            @Html.DisplayNameFor(model => model.NumOt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cliente)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DireccionObra)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CiudadObra)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProvinciaObra)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CpObra)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Promotor)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AutorProyecto)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Tecnico)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PemPec)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Presupuesto)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Duracion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Autor)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CssfaseProyecto)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NumTrabajadores)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Contratista)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DireccionContratista)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CiudadContratista)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProvinciaContratista)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CpContratista)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.JefeObra)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Encargado)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RecursoPreventivo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TipoObra)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DescripcionObra)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DescripcionLugar)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Superficie)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LinderoNorte)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LinderoSur)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LinderoEste)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LinderoOeste)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TraficoRodado)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Climatologia)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CaracteristicasTerreno)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AccesosRodados)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CirculacionesPeatonales)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LinElectAereas)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LinElectEnterradas)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Transformadores)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LineasTelefonicas)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ConduccionesGas)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Alcantarillado)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.InstProviAreasAux)
+                        </th>
+    -->
             <th></th>
 
         </tr>
@@ -156,152 +164,159 @@
 
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdEmpre)
-            </td>
+            @if (Context.Session.GetString("Rol") == "Administrador")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdEmpre)
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.NombreObra)
             </td>
+
+            <th>
+                @Html.DisplayFor(modelItem => item.TipoEstudio)
+            </th>
+
             <!--
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NumOt)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Cliente)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DireccionObra)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CiudadObra)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProvinciaObra)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CpObra)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Promotor)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AutorProyecto)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Tecnico)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PemPec)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Presupuesto)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Duracion)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Autor)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CssfaseProyecto)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NumTrabajadores)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Contratista)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DireccionContratista)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CiudadContratista)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProvinciaContratista)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CpContratista)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.JefeObra)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Encargado)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RecursoPreventivo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TipoObra)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DescripcionObra)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DescripcionLugar)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Superficie)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LinderoNorte)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LinderoSur)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LinderoEste)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LinderoOeste)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TraficoRodado)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Climatologia)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CaracteristicasTerreno)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AccesosRodados)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CirculacionesPeatonales)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LinElectAereas)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LinElectEnterradas)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Transformadores)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LineasTelefonicas)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ConduccionesGas)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Alcantarillado)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.InstProviAreasAux)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TipoEstudio)
-                        </td>-->
+    <td>
+        @Html.DisplayFor(modelItem => item.NumOt)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Cliente)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DireccionObra)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CiudadObra)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProvinciaObra)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CpObra)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Promotor)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AutorProyecto)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Tecnico)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PemPec)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Presupuesto)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Duracion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Autor)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CssfaseProyecto)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NumTrabajadores)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Contratista)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DireccionContratista)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CiudadContratista)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProvinciaContratista)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CpContratista)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.JefeObra)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Encargado)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RecursoPreventivo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TipoObra)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DescripcionObra)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DescripcionLugar)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Superficie)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LinderoNorte)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LinderoSur)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LinderoEste)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LinderoOeste)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TraficoRodado)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Climatologia)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CaracteristicasTerreno)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AccesosRodados)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CirculacionesPeatonales)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LinElectAereas)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LinElectEnterradas)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Transformadores)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LineasTelefonicas)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ConduccionesGas)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Alcantarillado)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.InstProviAreasAux)
+    </td>
+    -->
             <td>
                 <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.IdObra">
-                    Editar
+                    Acceder
                 </a>
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.IdObra">
-                    Editar
-                </a>
+                <!--
+        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.IdObra">
+            Detalles
+        </a>-->
                 <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdObra">
                     Eliminar
                 </a>

@@ -41,19 +41,34 @@ namespace PSS.Controllers
         public IActionResult Index()
         {
 
-            if (User.Identity.Name != null)
+            if (User.Identity.Name != null && HttpContext.Session.GetString("IdEmpresa")==null)
             {
                 //Obtengo la empresa y la meto en el Session
 
                 String nombreUsuario = User.Identity.Name;
                 var appUsuario = _context.ApplicationUser.SingleOrDefault(m => m.UserName == nombreUsuario);
                 var appUsuarioEmpresa = _context.UsuarioEmpresa.SingleOrDefault(m => m.Id == appUsuario.Id);
+                var rol = _context.UserRoles.Where(m => m.UserId == appUsuario.Id);
+                String IdRol = "";
+                foreach (var Data in rol)
+                {
+                    IdRol = Data.RoleId;
+                }
+                var roles = _context.Roles.Where(m => m.Id== IdRol );
+                String Rol = "";
+                foreach (var Data in roles)
+                {
+                    Rol = Data.Name;
+                }
+
                 try
                 {
 
                     var nombreEmpresa = _context.Empresa.SingleOrDefault(m => m.EmpresaId == appUsuarioEmpresa.EmpresaId);
                     HttpContext.Session.SetString("Empresa", nombreEmpresa.Nombre);
                     HttpContext.Session.SetString("IdEmpresa", nombreEmpresa.EmpresaId.ToString());
+                    HttpContext.Session.SetString("Role",Rol);
+                    HttpContext.Session.SetString("IdRole", IdRol);
 
                     ViewData["Nombre"] = "Empresa: " + nombreEmpresa.Nombre;
                 }

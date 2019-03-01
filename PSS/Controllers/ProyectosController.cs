@@ -23,7 +23,13 @@ namespace PSS.Controllers
         // GET: Proyectos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Proyectos.ToListAsync());
+            String RolLogeado = HttpContext.Session.GetString("Role");
+            String IdEmpre = HttpContext.Session.GetString("IdEmpresa");
+
+            if (RolLogeado=="Administrador")
+                return View(await _context.Proyectos.Where (m=>m.IdEmpre==int.Parse(IdEmpre)).ToListAsync());
+            else return View(await _context.Proyectos.ToListAsync());
+
         }
 
         // GET: Proyectos/Details/5
@@ -152,5 +158,27 @@ namespace PSS.Controllers
         {
             return _context.Proyectos.Any(e => e.IdObra == id);
         }
+
+        public async Task<List<SelectListItem>> GetTiposEstudio()
+        {
+            //Creamos un objeto llamado rolesLista
+            List<SelectListItem> TELista = new List<SelectListItem>();
+            SelectListItem li = new SelectListItem();
+            li.Text = "PSS";
+            li.Value = "PSS";
+            TELista.Add(li);
+            li = new SelectListItem();
+            li.Text = "ESS";
+            li.Value = "ESS";
+            TELista.Add(li);
+            li = new SelectListItem();
+            li.Text = "EBSS";
+            li.Value = "EBSS";
+            TELista.Add(li);
+            return TELista;
+
+        }
     }
+
 }
+

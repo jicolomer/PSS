@@ -14,7 +14,7 @@
                     <td width="30%"></td>
                     <td valign="bottom">
                         <div class="form-group">
-                            <br /><input type="submit" value="Grabar" class="btn btn-default" />
+                            <br /><input type="submit" value="Grabar" class="btn btn-primary" onclick="return CompruebaProyectos()"/>
                         </div>
                     </td>
                 </tr>
@@ -350,7 +350,10 @@
                                         <td>
                                             <div class="form-group">
                                                 <label asp-for="TipoEstudio" class="control-label"></label>
-                                                <input asp-for="TipoEstudio" class="form-control" />
+                                                <select id="SelectTipoEstudio" name="SelectTipoEstudio" class="form-control" onselect="" onclick="getTipoEstudios('GetTiposEstudio');">
+                                                    <option value="0">Seleccione un Tipo de Estudio</option>
+                                                </select>
+                                                <input asp-for="TipoEstudio" class="form-control" style="display:none;"/>
                                                 <span asp-validation-for="TipoEstudio" class="text-danger"></span>
                                             </div>
                                         </td>
