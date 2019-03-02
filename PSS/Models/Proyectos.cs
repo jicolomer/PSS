@@ -54,5 +54,8 @@ namespace PSS.Models
         public bool Alcantarillado { get; set; }
         public bool InstProviAreasAux { get; set; }
         public string TipoEstudio { get; set; }
+
+        public virtual string Empresa { get; set; }
+
     }
 }

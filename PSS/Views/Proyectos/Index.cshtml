@@ -10,10 +10,10 @@
 <table class="table">
     <thead>
         <tr>
-            @if (Context.Session.GetString("Rol") == "Administrador")
+            @if (Context.Session.GetString("Role") == "Administrador")
             {
                 <th>
-                    @Html.DisplayNameFor(model => model.IdEmpre)
+                    @Html.DisplayNameFor(model => model.Empresa)
                 </th>
             }
             <th>
@@ -164,10 +164,10 @@
 
 @foreach (var item in Model) {
         <tr>
-            @if (Context.Session.GetString("Rol") == "Administrador")
+            @if (Context.Session.GetString("Role") == "Administrador")
             {
                 <td>
-                    @Html.DisplayFor(modelItem => item.IdEmpre)
+                    @Html.DisplayFor(modelItem => item.Empresa)
                 </td>
             }
             <td>

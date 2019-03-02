@@ -41,7 +41,7 @@ namespace PSS.Controllers
         public IActionResult Index()
         {
 
-            if (User.Identity.Name != null && HttpContext.Session.GetString("IdEmpresa")==null)
+            if (User.Identity.Name != null )
             {
                 //Obtengo la empresa y la meto en el Session
 

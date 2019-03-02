@@ -104,7 +104,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="ProvinciaObra" class="control-label"></label>
-                                    <input asp-for="ProvinciaObra" class="form-control" />
+                                    <select id="SelectProvinciaObra" name="SelectProvinciaObra" class="form-control" onselect="" onclick="getProvincias('../Provincias/GetProvincias');">
+                                        <option value="0">Seleccione una Provincia</option>
+                                    </select>
+
+                                    <input asp-for="ProvinciaObra" class="form-control" style="display:none;" />
                                     <span asp-validation-for="ProvinciaObra" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
@@ -365,15 +369,10 @@
  
                         </div>
 
-
-
-
-
-
-
-
-
-        </form>
+                    </div>
+                </div>
+            </div>
+</form>
     </div>
 </div>
 

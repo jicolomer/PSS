@@ -26,10 +26,31 @@ namespace PSS.Controllers
             String RolLogeado = HttpContext.Session.GetString("Role");
             String IdEmpre = HttpContext.Session.GetString("IdEmpresa");
 
-            if (RolLogeado=="Administrador")
-                return View(await _context.Proyectos.Where (m=>m.IdEmpre==int.Parse(IdEmpre)).ToListAsync());
-            else return View(await _context.Proyectos.ToListAsync());
+            if (RolLogeado != "Administrador")
+            {
+                var retorno = await _context.Proyectos.Where(m => m.IdEmpre == int.Parse(IdEmpre)).ToListAsync();
+                foreach (var Data in retorno)
+                {
+                    var nombreEmpresa = _context.Empresa.SingleOrDefault(m => m.EmpresaId == Data.IdEmpre);
+                    Data.Empresa = nombreEmpresa.Nombre;
+                }
+                return View(retorno);
 
+            }
+
+
+            else
+            {
+                var retorno = await _context.Proyectos.ToListAsync();
+                foreach (var Data in retorno)
+                {
+                    var nombreEmpresa = _context.Empresa.SingleOrDefault(m => m.EmpresaId == Data.IdEmpre);
+                    Data.Empresa = nombreEmpresa.Nombre;
+
+                }
+                return View(retorno);
+
+            }
         }
 
         // GET: Proyectos/Details/5
@@ -101,7 +122,6 @@ namespace PSS.Controllers
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try

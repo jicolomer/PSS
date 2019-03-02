@@ -1,1 +1,16 @@
-Hello World
+        public List<SelectListItem> GetProvincias()
+        {
+            List<SelectListItem> Provs = new List<SelectListItem>();
+            var provs = _context.Provincias.ToList();
+            foreach (var Data in provs)
+            {
+                Provs.Add(new SelectListItem()
+                {
+                    Value = Data.IdProvincia.ToString(),
+                    Text = Data.Provincia
+                });
+
+            }
+            return Provs;
+
+        }
