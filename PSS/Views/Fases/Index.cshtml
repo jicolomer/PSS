@@ -1,0 +1,58 @@
+﻿@model IEnumerable<PSS.Models.Fases>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table width="100%" border="0">
+    <tr>
+        <td valign="middle" nowrap><h4>Fases del Proyecto @Context.Request.Query["NombreObra"]</h4></td>
+                <input type="hidden" id="IdProyecto" name="IdProyecto" value="@Context.Request.Query["IdObra"]" />
+        </td>
+    </tr>
+</table>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary"  asp-route-id="@Context.Request.Query["IdObra"]" >Create New</a>
+</p>
+<!--
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProyecto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdFase)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fase)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdProyecto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdFase)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+-->

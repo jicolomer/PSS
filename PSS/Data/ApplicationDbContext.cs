@@ -33,5 +33,7 @@ namespace PSS.Data
 
         public DbSet<PSS.Models.Provincias> Provincias { get; set; }
 
+        public DbSet<PSS.Models.Fases> Fases { get; set; }
+
     }
 }

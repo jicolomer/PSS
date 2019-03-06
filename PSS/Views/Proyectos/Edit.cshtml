@@ -466,11 +466,19 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
 
+                                    <td>
+                                        @{
+                                            var parms = new Dictionary<string, string>
+                                            {
+                                                { "NombreObra", Model.NombreObra },
+                                                { "IdObra", Model.IdObra.ToString () }
+                                            };
+                                        }
+                                        <a class="btn btn-success" asp-controller="Fases" asp-action="Index" asp-route-id="@Model.IdObra" asp-all-route-data="@parms">
+                                            Acceder Fases
+                                        </a>
+                                    </td>
                                 </tr>
                             </table>
 
