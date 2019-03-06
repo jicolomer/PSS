@@ -70,7 +70,7 @@ namespace PSS.Controllers
                     HttpContext.Session.SetString("Role",Rol);
                     HttpContext.Session.SetString("IdRole", IdRol);
 
-                    ViewData["Nombre"] = "Empresa: " + nombreEmpresa.Nombre;
+                    ViewData["Empresa"] = "Empresa: " + nombreEmpresa.Nombre;
                 }
                 catch (Exception)
                 {

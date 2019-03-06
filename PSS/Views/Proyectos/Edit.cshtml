@@ -8,15 +8,20 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <table>
+            <table width="100%" border="0">
                 <tr>
-                    <td valign="middle"><h4>Gestión de Proyectos</h4></td>
-                    <td width="30%"></td>
-                    <td valign="bottom">
+                    <td valign="middle"  nowrap><h4>Gestión de Proyectos</h4></td>
+                    <td valign="bottom"  width="30%" align="center">
                         <div class="form-group">
                             <br /><input type="submit" value="Grabar" class="btn btn-primary" onclick="return CompruebaProyectos()" />
                         </div>
                     </td>
+                    <td width="30%" align="center">                        
+                        <div class="form-group">
+                            <input asp-for="IdEmpre" class="form-control" value="@Context.Session.GetString("IdEmpresa")" style="display:none;" />
+                        </div>
+                    </td>
+
                 </tr>
             </table>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -45,228 +50,347 @@
                                 Datos  IV
                             </a>
                         </li>
-                        <li>
-                            <a href="#DGeneralesV" aria-controls="DGeneralesV" role="tab" data-toggle="tab">
-                                Datos  V
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#DGeneralesVI" aria-controls="DGeneralesVI" role="tab" data-toggle="tab">
-                                Datos  VI
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#DGeneralesVII" aria-controls="DGeneralesVII" role="tab" data-toggle="tab">
-                                Datos  VII
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#DGeneralesVIII" aria-controls="DGeneralesVIII" role="tab" data-toggle="tab">
-                                Datos  VIII
-                            </a>
-                        </li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content" style="padding-top: 20px">
                         <div role="tabpanel" class="tab-pane active" id="DGeneralesI">
-                            <div class="form-group">
-                                <input asp-for="IdEmpre" class="form-control" value="@Context.Session.GetString("IdEmpresa")" style="display:none;" />
-                                <h4><p asp-validation-for="IdEmpre" class="text-danger">@ViewData["Empresa"] </p></h4>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="NombreObra" class="control-label"></label>
-                                <input asp-for="NombreObra" class="form-control" />
-                                <span asp-validation-for="NombreObra" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
+                            <table width="100%">
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="form-group">
+                                            <label asp-for="NombreObra" class="control-label"></label>
+                                            <input asp-for="NombreObra" class="form-control" />
+                                            <span asp-validation-for="NombreObra" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="TipoEstudio" class="control-label"></label>
+                                            <select id="SelectTipoEstudio" name="SelectTipoEstudio" class="form-control" onselect="" onclick="getTipoEstudios('../GetTiposEstudio');">
+                                                <option value="0">Seleccione un Tipo de Estudio</option>
+                                            </select>
+                                            <input asp-for="TipoEstudio" class="form-control" style="display:none;" />
+                                            <span asp-validation-for="TipoEstudio" class="text-danger"></span>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="40%">
+                                        <div class="form-group">
+                                            <label asp-for="Cliente" class="control-label"></label>
+                                            <input asp-for="Cliente" class="form-control" />
+                                            <span asp-validation-for="Cliente" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td width="40%">
+                                        <div class="form-group">
+                                            <label asp-for="DireccionObra" class="control-label"></label>
+                                            <input asp-for="DireccionObra" class="form-control" />
+                                            <span asp-validation-for="DireccionObra" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td width="20%"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="ProvinciaObra" class="control-label"></label>
+                                            <select id="SelectProvinciaObra" name="SelectProvinciaObra" class="form-control" onselect="" onclick="getProvincias('../../Provincias/GetProvincias');">
+                                                <option value="0">Seleccione una Provincia</option>
+                                            </select>
+                                            <input asp-for="ProvinciaObra" class="form-control" style="display:none;" />
+                                            <span asp-validation-for="ProvinciaObra" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="CiudadObra" class="control-label"></label>
+                                            <input asp-for="CiudadObra" class="form-control" />
+                                            <span asp-validation-for="CiudadObra" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="CpObra" class="control-label"></label>
+                                            <input asp-for="CpObra" class="form-control-medium" />
+                                            <span asp-validation-for="CpObra" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="Promotor" class="control-label"></label>
+                                            <input asp-for="Promotor" class="form-control" />
+                                            <span asp-validation-for="Promotor" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="AutorProyecto" class="control-label"></label>
+                                            <input asp-for="AutorProyecto" class="form-control" />
+                                            <span asp-validation-for="AutorProyecto" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="Autor" class="control-label"></label>
+                                            <input asp-for="Autor" class="form-control" />
+                                            <span asp-validation-for="Autor" class="text-danger"></span>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <table width="100%">
+                                            <tr>
+                                                <td width="50%">
+                                                    <div class="form-group">
+                                                        <label asp-for="PemPec" class="control-label"></label>
+                                                        <select id="SelectPresupuesto" name="SelectPresupuesto" class="form-control" onclick="getPresupuestos('../GetPresupuestos');">
+                                                            <option value="0">Seleccione un tipo de presupuesto</option>
+                                                        </select>
+                                                        <input asp-for="PemPec" class="form-control" style="display:none;"/>
+                                                        <span asp-validation-for="PemPec" class="text-danger"></span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label asp-for="Presupuesto" class="control-label"></label>
+                                                        <input asp-for="Presupuesto" class="form-control" />
+                                                        <span asp-validation-for="Presupuesto" class="text-danger"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="Duracion" class="control-label"></label>
+                                            <input asp-for="Duracion" class="form-control" />
+                                            <span asp-validation-for="Duracion" class="text-danger"></span>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="form-group" style="display:none;">
                                 <label asp-for="NumOt" class="control-label"></label>
                                 <input asp-for="NumOt" class="form-control-small" />
                                 <span asp-validation-for="NumOt" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Cliente" class="control-label"></label>
-                                <input asp-for="Cliente" class="form-control" />
-                                <span asp-validation-for="Cliente" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="DireccionObra" class="control-label"></label>
-                                <input asp-for="DireccionObra" class="form-control" />
-                                <span asp-validation-for="DireccionObra" class="text-danger"></span>
-                            </div>
+
 
                         </div>
                         <div role="tabpanel" class="tab-pane" id="DGeneralesII">
-                            <div class="form-group">
-                                <label asp-for="CiudadObra" class="control-label"></label>
-                                <input asp-for="CiudadObra" class="form-control" />
-                                <span asp-validation-for="CiudadObra" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="ProvinciaObra" class="control-label"></label>
-                                <select id="SelectProvinciaObra" name="SelectProvinciaObra" class="form-control" onselect="" onclick="getProvincias('../../Provincias/GetProvincias');">
-                                    <option value="0">Seleccione una Provincia</option>
-                                </select>
-                                <input asp-for="ProvinciaObra" class="form-control" style="display:none;" />
-                                <span asp-validation-for="ProvinciaObra" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="CpObra" class="control-label"></label>
-                                <input asp-for="CpObra" class="form-control" />
-                                <span asp-validation-for="CpObra" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Promotor" class="control-label"></label>
-                                <input asp-for="Promotor" class="form-control" />
-                                <span asp-validation-for="Promotor" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="AutorProyecto" class="control-label"></label>
-                                <input asp-for="AutorProyecto" class="form-control" />
-                                <span asp-validation-for="AutorProyecto" class="text-danger"></span>
-                            </div>
+                            <table width="100%">
+                                <tr>
+                                    <td width="40%">
+                                        <div class="form-group">
+                                            <label asp-for="Tecnico" class="control-label"></label>
+                                            <input asp-for="Tecnico" class="form-control" />
+                                            <span asp-validation-for="Tecnico" class="text-danger"></span>
+                                        </div>
+
+                                    </td>
+                                    <td width="40%">
+                                        <div class="form-group">
+                                            <label asp-for="CssfaseProyecto" class="control-label"></label>
+                                            <input asp-for="CssfaseProyecto" class="form-control" />
+                                            <span asp-validation-for="CssfaseProyecto" class="text-danger"></span>
+                                        </div>
+
+                                    </td>
+                                    <td width="20%">
+                                        <div class="form-group">
+                                            <label asp-for="NumTrabajadores" class="control-label"></label>
+                                            <input asp-for="NumTrabajadores" class="form-control" />
+                                            <span asp-validation-for="NumTrabajadores" class="text-danger"></span>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="Contratista" class="control-label"></label>
+                                            <input asp-for="Contratista" class="form-control" />
+                                            <span asp-validation-for="Contratista" class="text-danger"></span>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="DireccionContratista" class="control-label"></label>
+                                            <input asp-for="DireccionContratista" class="form-control" />
+                                            <span asp-validation-for="DireccionContratista" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="CiudadContratista" class="control-label"></label>
+                                            <input asp-for="CiudadContratista" class="form-control" />
+                                            <span asp-validation-for="CiudadContratista" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="ProvinciaContratista" class="control-label"></label>
+                                            <input asp-for="ProvinciaContratista" class="form-control" />
+                                            <span asp-validation-for="ProvinciaContratista" class="text-danger"></span>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="CpContratista" class="control-label"></label>
+                                            <input asp-for="CpContratista" class="form-control" />
+                                            <span asp-validation-for="CpContratista" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="JefeObra" class="control-label"></label>
+                                            <input asp-for="JefeObra" class="form-control" />
+                                            <span asp-validation-for="JefeObra" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="Encargado" class="control-label"></label>
+                                            <input asp-for="Encargado" class="form-control" />
+                                            <span asp-validation-for="Encargado" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="RecursoPreventivo" class="control-label"></label>
+                                            <input asp-for="RecursoPreventivo" class="form-control" />
+                                            <span asp-validation-for="RecursoPreventivo" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            
 
                         </div>
                         <div role="tabpanel" class="tab-pane" id="DGeneralesIII">
-                            <div class="form-group">
-                                <label asp-for="Tecnico" class="control-label"></label>
-                                <input asp-for="Tecnico" class="form-control" />
-                                <span asp-validation-for="Tecnico" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="PemPec" class="control-label"></label>
-                                <input asp-for="PemPec" class="form-control" />
-                                <span asp-validation-for="PemPec" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Presupuesto" class="control-label"></label>
-                                <input asp-for="Presupuesto" class="form-control" />
-                                <span asp-validation-for="Presupuesto" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Duracion" class="control-label"></label>
-                                <input asp-for="Duracion" class="form-control" />
-                                <span asp-validation-for="Duracion" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Autor" class="control-label"></label>
-                                <input asp-for="Autor" class="form-control" />
-                                <span asp-validation-for="Autor" class="text-danger"></span>
-                            </div>
+                            <table width="100%">
+                                <tr>
+                                    <td width="40%">
+                                        <div class="form-group">
+                                            <label asp-for="TipoObra" class="control-label"></label>
+                                            <input asp-for="TipoObra" class="form-control" />
+                                            <span asp-validation-for="TipoObra" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td width="40%">
+                                        <div class="form-group">
+                                            <label asp-for="Superficie" class="control-label"></label>
+                                            <input asp-for="Superficie" class="form-control" />
+                                            <span asp-validation-for="Superficie" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td width="20%"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="form-group">
+                                            <label asp-for="DescripcionObra" class="control-label"></label>
+                                            <textarea asp-for="DescripcionObra" rows="5" class="form-control"></textarea>
+                                            <span asp-validation-for="DescripcionObra" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="form-group">
+                                            <label asp-for="DescripcionLugar" class="control-label"></label>
+                                            <textarea asp-for="DescripcionLugar" rows="5" class="form-control"></textarea>
+                                            <span asp-validation-for="DescripcionLugar" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="LinderoNorte" class="control-label"></label>
+                                            <input asp-for="LinderoNorte" class="form-control" />
+                                            <span asp-validation-for="LinderoNorte" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="LinderoSur" class="control-label"></label>
+                                            <input asp-for="LinderoSur" class="form-control" />
+                                            <span asp-validation-for="LinderoSur" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="LinderoEste" class="control-label"></label>
+                                            <input asp-for="LinderoEste" class="form-control" />
+                                            <span asp-validation-for="LinderoEste" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label asp-for="LinderoOeste" class="control-label"></label>
+                                            <input asp-for="LinderoOeste" class="form-control" />
+                                            <span asp-validation-for="LinderoOeste" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="form-group">
+                                            <label asp-for="TraficoRodado" class="control-label"></label>
+                                            <input asp-for="TraficoRodado" class="form-control" />
+                                            <span asp-validation-for="TraficoRodado" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="form-group">
+                                            <label asp-for="Climatologia" class="control-label"></label>
+                                            <input asp-for="Climatologia" class="form-control" />
+                                            <span asp-validation-for="Climatologia" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="form-group">
+                                            <label asp-for="CaracteristicasTerreno" class="control-label"></label>
+                                            <input asp-for="CaracteristicasTerreno" class="form-control" />
+                                            <span asp-validation-for="CaracteristicasTerreno" class="text-danger"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                </tr>
+                            </table>
+
+
+
 
                         </div>
                         <div role="tabpanel" class="tab-pane" id="DGeneralesIV">
-                            <div class="form-group">
-                                <label asp-for="CssfaseProyecto" class="control-label"></label>
-                                <input asp-for="CssfaseProyecto" class="form-control" />
-                                <span asp-validation-for="CssfaseProyecto" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="NumTrabajadores" class="control-label"></label>
-                                <input asp-for="NumTrabajadores" class="form-control" />
-                                <span asp-validation-for="NumTrabajadores" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Contratista" class="control-label"></label>
-                                <input asp-for="Contratista" class="form-control" />
-                                <span asp-validation-for="Contratista" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="DireccionContratista" class="control-label"></label>
-                                <input asp-for="DireccionContratista" class="form-control" />
-                                <span asp-validation-for="DireccionContratista" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="CiudadContratista" class="control-label"></label>
-                                <input asp-for="CiudadContratista" class="form-control" />
-                                <span asp-validation-for="CiudadContratista" class="text-danger"></span>
-                            </div>
-
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="DGeneralesV">
-                            <div class="form-group">
-                                <label asp-for="ProvinciaContratista" class="control-label"></label>
-                                <input asp-for="ProvinciaContratista" class="form-control" />
-                                <span asp-validation-for="ProvinciaContratista" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="CpContratista" class="control-label"></label>
-                                <input asp-for="CpContratista" class="form-control" />
-                                <span asp-validation-for="CpContratista" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="JefeObra" class="control-label"></label>
-                                <input asp-for="JefeObra" class="form-control" />
-                                <span asp-validation-for="JefeObra" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Encargado" class="control-label"></label>
-                                <input asp-for="Encargado" class="form-control" />
-                                <span asp-validation-for="Encargado" class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <label asp-for="RecursoPreventivo" class="control-label"></label>
-                                <input asp-for="RecursoPreventivo" class="form-control" />
-                                <span asp-validation-for="RecursoPreventivo" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="DGeneralesVI">
-                            <div class="form-group">
-                                <label asp-for="TipoObra" class="control-label"></label>
-                                <input asp-for="TipoObra" class="form-control" />
-                                <span asp-validation-for="TipoObra" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="DescripcionObra" class="control-label"></label>
-                                <input asp-for="DescripcionObra" class="form-control" />
-                                <span asp-validation-for="DescripcionObra" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="DescripcionLugar" class="control-label"></label>
-                                <input asp-for="DescripcionLugar" class="form-control" />
-                                <span asp-validation-for="DescripcionLugar" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Superficie" class="control-label"></label>
-                                <input asp-for="Superficie" class="form-control" />
-                                <span asp-validation-for="Superficie" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="LinderoNorte" class="control-label"></label>
-                                <input asp-for="LinderoNorte" class="form-control" />
-                                <span asp-validation-for="LinderoNorte" class="text-danger"></span>
-                            </div>
-
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="DGeneralesVII">
-                            <div class="form-group">
-                                <label asp-for="LinderoSur" class="control-label"></label>
-                                <input asp-for="LinderoSur" class="form-control" />
-                                <span asp-validation-for="LinderoSur" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="LinderoEste" class="control-label"></label>
-                                <input asp-for="LinderoEste" class="form-control" />
-                                <span asp-validation-for="LinderoEste" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="LinderoOeste" class="control-label"></label>
-                                <input asp-for="LinderoOeste" class="form-control" />
-                                <span asp-validation-for="LinderoOeste" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="TraficoRodado" class="control-label"></label>
-                                <input asp-for="TraficoRodado" class="form-control" />
-                                <span asp-validation-for="TraficoRodado" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Climatologia" class="control-label"></label>
-                                <input asp-for="Climatologia" class="form-control" />
-                                <span asp-validation-for="Climatologia" class="text-danger"></span>
-                            </div>
-
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="DGeneralesVIII">
                             <table width="100%">
                                 <tr>
                                     <td width="50%">
@@ -343,21 +467,8 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="form-group">
-                                            <label asp-for="CaracteristicasTerreno" class="control-label"></label>
-                                            <input asp-for="CaracteristicasTerreno" class="form-control" />
-                                            <span asp-validation-for="CaracteristicasTerreno" class="text-danger"></span>
-                                        </div>
                                     </td>
                                     <td>
-                                        <div class="form-group">
-                                            <label asp-for="TipoEstudio" class="control-label"></label>
-                                            <select id="SelectTipoEstudio" name="SelectTipoEstudio" class="form-control" onselect="" onclick="getTipoEstudios('../GetTiposEstudio');">
-                                                <option value="0">Seleccione un Tipo de Estudio</option>
-                                            </select>
-                                            <input asp-for="TipoEstudio" class="form-control" style="display:none;" />
-                                            <span asp-validation-for="TipoEstudio" class="text-danger"></span>
-                                        </div>
                                     </td>
 
                                 </tr>
@@ -375,7 +486,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Anterior</a>
 </div>
 
 @section Scripts {

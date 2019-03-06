@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PSS.Data;
 using PSS.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PSS.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class EmpresasController : Controller
     {
         private readonly ApplicationDbContext _context;

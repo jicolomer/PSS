@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using PSS.Data;
 using PSS.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PSS.Controllers
 {
+    [Authorize(Roles = "Administrador,Usuario,Técnico")]
     public class ProyectosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -28,7 +30,7 @@ namespace PSS.Controllers
 
             if (RolLogeado != "Administrador")
             {
-                var retorno = await _context.Proyectos.Where(m => m.IdEmpre == int.Parse(IdEmpre)).ToListAsync();
+                var retorno = await _context.Proyectos.Where(m => m.IdEmpre == int.Parse(IdEmpre)).OrderBy(m => m.NombreObra).ToListAsync();
                 foreach (var Data in retorno)
                 {
                     var nombreEmpresa = _context.Empresa.SingleOrDefault(m => m.EmpresaId == Data.IdEmpre);
@@ -41,7 +43,7 @@ namespace PSS.Controllers
 
             else
             {
-                var retorno = await _context.Proyectos.ToListAsync();
+                var retorno = await _context.Proyectos.OrderBy(m => m.NombreObra).ToListAsync();
                 foreach (var Data in retorno)
                 {
                     var nombreEmpresa = _context.Empresa.SingleOrDefault(m => m.EmpresaId == Data.IdEmpre);
@@ -198,6 +200,22 @@ namespace PSS.Controllers
             return TELista;
 
         }
+
+        public async Task<List<SelectListItem>> GetPresupuestos()
+        {
+            List<SelectListItem> PreLista = new List<SelectListItem>();
+            SelectListItem li = new SelectListItem();
+            li.Text = "PEM    ";
+            li.Value = "PEM";
+            PreLista.Add(li);
+            li = new SelectListItem();
+            li.Text = "PEC    ";
+            li.Value = "PEC";
+            PreLista.Add(li);
+            return PreLista;
+
+        }
+
     }
 
 }

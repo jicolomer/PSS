@@ -1,15 +1,16 @@
 ﻿var cont = 0;
 var cont2 = 0;
 var cont3 = 0;
+var cont4 = 0;
+var cont5 = 0;
 
 function CompruebaProyectos() {
-    alert("pasa");
     $('input[name=TipoEstudio]')[0].value = document.getElementById('SelectTipoEstudio').value;
     $('input[name=ProvinciaObra]')[0].value = document.getElementById('SelectProvinciaObra').value;
+    $('input[name=PemPec]')[0].value = document.getElementById('SelectPresupuesto').value;
 
-    alert($('input[name=ProvinciaObra]')[0].value);
     var txt;
-    var r = confirm("Desea grabar?");
+    var r = confirm("Realmente desea grabar?");
     if (r == true) {
         return true;
     } else {
@@ -88,7 +89,43 @@ function getTipoEstudiosID(action,ID) {
 function CargaProyectos() {
     getProvinciasID('../../Provincias/GetProvincias', $('input[name=ProvinciaObra]')[0].value);
     getTipoEstudiosID('../GetTiposEstudio', $('input[name=TipoEstudio]')[0].value);
+    getPresupuestosID('../GetPresupuestos', $('input[name=PemPec]')[0].value);
 
     
 
+}
+
+
+function getPresupuestosID(action, ID) {
+
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {},
+        success: function (response) {
+            if (cont4 == 0) {
+                for (var i = 0; i < response.length; i++) {
+                    if (ID != response[i].value) document.getElementById('SelectPresupuesto').options[i] = new Option(response[i].text, response[i].value, false, false);
+                    else document.getElementById('SelectPresupuesto').options[i] = new Option(response[i].text, response[i].value, false, true);
+                }
+                cont4 = 1;
+            }
+        }
+    });
+}
+function getPresupuestos(action) {
+
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {},
+        success: function (response) {
+            if (cont5 == 0) {
+                for (var i = 0; i < response.length; i++) {
+                    document.getElementById('SelectPresupuesto').options[i] = new Option(response[i].text, response[i].value);
+                }
+                cont5 = 1;
+            }
+        }
+    });
 }
