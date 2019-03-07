@@ -216,6 +216,23 @@ namespace PSS.Controllers
 
         }
 
+        public async Task<List<SelectListItem>> GetFasesPorProyecto(String ID)
+        {
+            List<SelectListItem> resultado = new List<SelectListItem>();
+            var colecc = _context.Fases.Where (m => m.IdProyecto== int.Parse(ID)).ToList();
+
+            foreach (var Data in colecc)
+            {
+                resultado.Add(new SelectListItem()
+                {
+                    Value = Data.IdFase.ToString(),
+                    Text = Data.Fase + "(" + Data.IdFase + ")"
+                });
+
+            }
+            return resultado;
+        }
+
     }
 
 }

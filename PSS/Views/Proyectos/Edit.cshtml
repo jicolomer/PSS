@@ -10,13 +10,13 @@
         <form asp-action="Edit">
             <table width="100%" border="0">
                 <tr>
-                    <td valign="middle"  nowrap><h4>Gestión de Proyectos</h4></td>
-                    <td valign="bottom"  width="30%" align="center">
+                    <td valign="middle" nowrap><h4>Gestión de Proyectos</h4></td>
+                    <td valign="bottom" width="30%" align="center">
                         <div class="form-group">
                             <br /><input type="submit" value="Grabar" class="btn btn-primary" onclick="return CompruebaProyectos()" />
                         </div>
                     </td>
-                    <td width="30%" align="center">                        
+                    <td width="30%" align="center">
                         <div class="form-group">
                             <input asp-for="IdEmpre" class="form-control" value="@Context.Session.GetString("IdEmpresa")" style="display:none;" />
                         </div>
@@ -48,6 +48,11 @@
                         <li>
                             <a href="#DGeneralesIV" aria-controls="DGeneralesIV" role="tab" data-toggle="tab">
                                 Datos  IV
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#DFases" aria-controls="DFases" role="tab" data-toggle="tab">
+                                Fases
                             </a>
                         </li>
                     </ul>
@@ -153,7 +158,7 @@
                                                         <select id="SelectPresupuesto" name="SelectPresupuesto" class="form-control" onclick="getPresupuestos('../GetPresupuestos');">
                                                             <option value="0">Seleccione un tipo de presupuesto</option>
                                                         </select>
-                                                        <input asp-for="PemPec" class="form-control" style="display:none;"/>
+                                                        <input asp-for="PemPec" class="form-control" style="display:none;" />
                                                         <span asp-validation-for="PemPec" class="text-danger"></span>
                                                     </div>
                                                 </td>
@@ -280,7 +285,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            
+
 
                         </div>
                         <div role="tabpanel" class="tab-pane" id="DGeneralesIII">
@@ -470,20 +475,21 @@
                                     <td>
                                         @{
                                             var parms = new Dictionary<string, string>
-                                            {
-                                                { "NombreObra", Model.NombreObra },
-                                                { "IdObra", Model.IdObra.ToString () }
-                                            };
+                                                                            {
+                                                                                { "NombreObra", Model.NombreObra },
+                                                                                { "IdObra", Model.IdObra.ToString () }
+                                                                            };
                                         }
-                                        <a class="btn btn-success" asp-controller="Fases" asp-action="Index" asp-route-id="@Model.IdObra" asp-all-route-data="@parms">
-                                            Acceder Fases
-                                        </a>
                                     </td>
                                 </tr>
                             </table>
 
                         </div>
-
+                        <div id="DFases" class="tab-pane">
+                            <a class="btn btn-primary" data-toggle="modal" data-target="#modalAgregar">Agregar</a>
+                            <br />
+                            <div id="TFases" name="TFases"></div>
+                        </div>
                     </div>
 
                 </div>
@@ -496,6 +502,46 @@
 <div>
     <a asp-action="Index">Anterior</a>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Agregar </h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="IdProyecto" class="control-label">IdProyecto</label>
+                        <input name="IdProyecto" id="IdProyecto" class="form-control" value="@Model.IdObra" />
+                    </div>
+                    <div class="form-group">
+                        <label for="IdFase" class="control-label">IdFase</label>
+                        <input name="IdFase" id="IdFase" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Fase" class="control-label">Fase</label>
+                        <input name="Fase" id="Fase" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <p id="mensajenuevo"></p>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="crearFase('../../Fases/CrearFasePorProyecto')">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -11,7 +11,7 @@ namespace PSS.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
         public int Id { get; set; }
         public int IdProyecto { get; set; }
-        public int IdFase { get; set; }
+        public string IdFase { get; set; }
 
         [Required(ErrorMessage = "Obligatorio")]
         [StringLength(250, MinimumLength = 3, ErrorMessage = "El campo debe tener entre 3 y 250 caracteres")]

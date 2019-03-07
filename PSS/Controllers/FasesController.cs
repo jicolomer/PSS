@@ -49,20 +49,34 @@ namespace PSS.Controllers
             return View();
         }
 
-        // POST: Fases/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdProyecto,IdFase,Fase")] Fases fases)
+
+        public async Task<string> CrearFasePorProyecto(String IdProyecto, String IdFase, String Fase)
         {
-            if (ModelState.IsValid)
+            string resp = "OK";
+            try
             {
-                _context.Add(fases);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                Fases fase = new Fases();
+                fase.IdFase = IdFase;
+                fase.IdProyecto = int.Parse(IdProyecto);
+                fase.Fase = Fase;
+                if (ModelState.IsValid)
+                {
+                    _context.Fases.Add(fase);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    resp = "Error: Modelo inválido." ;
+
+                }
             }
-            return View(fases);
+            catch (Exception ex)
+            {
+                resp = "Error: " + ex.Message; 
+            }
+
+
+            return resp;
         }
 
         // GET: Fases/Edit/5

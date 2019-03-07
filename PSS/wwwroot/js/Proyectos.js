@@ -2,7 +2,16 @@
 var cont2 = 0;
 var cont3 = 0;
 var cont4 = 0;
-var cont5 = 0;
+
+function CargaProyectos() {
+    getProvinciasID('../../Provincias/GetProvincias', $('input[name=ProvinciaObra]')[0].value);
+    getTipoEstudiosID('../GetTiposEstudio', $('input[name=TipoEstudio]')[0].value);
+    getPresupuestosID('../GetPresupuestos', $('input[name=PemPec]')[0].value);
+    getFasesPorProyecto('../GetFasesPorProyecto', $('input[name=IdObra]')[0].value);
+
+
+}
+
 
 function CompruebaProyectos() {
     $('input[name=TipoEstudio]')[0].value = document.getElementById('SelectTipoEstudio').value;
@@ -86,14 +95,6 @@ function getTipoEstudiosID(action,ID) {
     });
 }
 
-function CargaProyectos() {
-    getProvinciasID('../../Provincias/GetProvincias', $('input[name=ProvinciaObra]')[0].value);
-    getTipoEstudiosID('../GetTiposEstudio', $('input[name=TipoEstudio]')[0].value);
-    getPresupuestosID('../GetPresupuestos', $('input[name=PemPec]')[0].value);
-
-    
-
-}
 
 
 function getPresupuestosID(action, ID) {
@@ -127,5 +128,64 @@ function getPresupuestos(action) {
                 cont5 = 1;
             }
         }
+    });
+}
+
+
+function getFasesPorProyecto(action, ID) {
+
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {ID},
+        success: function (response) {
+            var tabla = "";
+            tabla = "<table>";
+            if (response.length == 0) {
+                tabla += "<tr><td>NO EXISTEN FASES ASOCIADAS</td></tr></table>";
+            }
+            else
+            {
+
+                for (var i = 0; i < response.length; i++) {
+                    tabla += "<tr><td>" + response[i].text + response[i].value + "</td></tr>";
+                }
+                tabla += "</table>";
+            }
+            document.getElementById('TFases').innerHTML = tabla;
+
+        }
+    });
+}
+
+
+var IdFase;
+var Fase;
+var IdProyecto;
+function crearFase(action) {
+    //Obtener los datos ingresados en los inputs respectivos
+    IdFase = $('input[name=IdFase]')[0].value;
+    Fase = $('input[name=Fase]')[0].value;
+    IdProyecto = $('input[name=IdProyecto]')[0].value;
+    var Id = 0;
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {
+            IdProyecto, IdFase, Fase
+        },
+        success: function (response) {
+            if (response === "OK") {
+                getFasesPorProyecto('../GetFasesPorProyecto', $('input[name=IdObra]')[0].value);
+            }
+            else {
+                $('#mensajenuevo').html("No se puede guardar la fase.");
+            }
+        }
+        ,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error: " + errorThrown);
+            alert(action);
+        }  
     });
 }
