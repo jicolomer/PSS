@@ -162,6 +162,7 @@ function getFasesPorProyecto(action, ID) {
 var IdFase;
 var Fase;
 var IdProyecto;
+
 function crearFase(action) {
     //Obtener los datos ingresados en los inputs respectivos
     IdFase = $('input[name=IdFase]')[0].value;
