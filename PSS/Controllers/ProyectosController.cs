@@ -225,13 +225,15 @@ namespace PSS.Controllers
             {
                 resultado.Add(new SelectListItem()
                 {
-                    Value = Data.IdFase.ToString(),
-                    Text = Data.Fase + "(" + Data.IdFase + ")"
+                    Value = Data.Id.ToString(),
+                    Text = Data.Fase + "||" + Data.IdFase 
                 });
 
             }
             return resultado;
         }
+
+
 
     }
 

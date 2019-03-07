@@ -163,5 +163,62 @@ namespace PSS.Controllers
         {
             return _context.Fases.Any(e => e.Id == id);
         }
+
+        public async Task<List<Fases>> GetFase(string id)
+        {
+
+            List<Fases> lista = new List<Fases>();
+            try
+            {
+                //Declaro un objeto list que depende la clase Usuario
+                var obj = await _context.Fases.SingleOrDefaultAsync(m => m.Id == int.Parse(id));
+
+                lista.Add(new Fases()
+                {
+                    IdFase = obj.IdFase,
+                    Id = obj.Id,
+                    Fase = obj.Fase,
+                    IdProyecto = obj.IdProyecto
+                });
+
+            }
+            catch (Exception ex)
+            {
+                String a = ex.Message;
+            }
+            return lista;
+        }
+
+
+        
+
+           public async Task<string> ActualizarFasePorProyecto(String IdProyecto, String IdFase, String Fase)
+        {
+            var resp = "";
+            try
+            {
+
+                Fases fase = new Fases
+                {
+                    IdProyecto = int.Parse(IdProyecto),
+                    IdFase = IdFase,
+                    Fase = Fase
+                };
+                //Actualizamos los datos
+                _context.Update(fase);
+                await _context.SaveChangesAsync();
+
+                resp = "OK";
+            }
+            catch (Exception ex2)
+            {
+                resp = ex2.Message;
+
+            }
+            return resp;
+
+        }
+
+
     }
 }

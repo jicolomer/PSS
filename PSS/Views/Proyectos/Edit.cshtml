@@ -475,10 +475,10 @@
                                     <td>
                                         @{
                                             var parms = new Dictionary<string, string>
-                                                                            {
-                                                                                { "NombreObra", Model.NombreObra },
-                                                                                { "IdObra", Model.IdObra.ToString () }
-                                                                            };
+                                                                                                            {
+                                                                                                                { "NombreObra", Model.NombreObra },
+                                                                                                                { "IdObra", Model.IdObra.ToString () }
+                                                                                                            };
                                         }
                                     </td>
                                 </tr>
@@ -487,6 +487,7 @@
                         </div>
                         <div id="DFases" class="tab-pane">
                             <a class="btn btn-primary" data-toggle="modal" data-target="#modalAgregar">Agregar</a>
+                            <br />
                             <br />
                             <div id="TFases" name="TFases"></div>
                         </div>
@@ -540,6 +541,41 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Editar </h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="IdProyecto" class="control-label">IdProyecto</label>
+                        <input name="EIdProyecto" id="EIdProyecto" class="form-control" value="@Model.IdObra" />
+                    </div>
+                    <div class="form-group">
+                        <label for="IdFase" class="control-label">IdFase</label>
+                        <input name="EIdFase" id="EIdFase" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Fase" class="control-label">Fase</label>
+                        <input name="EFase" id="EFase" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <p id="Emensajenuevo"></p>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="actualizarFase('../../Fases/ActualizarFasePorProyecto')">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

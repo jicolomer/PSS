@@ -2,6 +2,7 @@
 var cont2 = 0;
 var cont3 = 0;
 var cont4 = 0;
+var cont5 = 0;
 
 function CargaProyectos() {
     getProvinciasID('../../Provincias/GetProvincias', $('input[name=ProvinciaObra]')[0].value);
@@ -140,7 +141,7 @@ function getFasesPorProyecto(action, ID) {
         data: {ID},
         success: function (response) {
             var tabla = "";
-            tabla = "<table>";
+            tabla = "<table border='1' style='border-collapse:collapse;'>";
             if (response.length == 0) {
                 tabla += "<tr><td>NO EXISTEN FASES ASOCIADAS</td></tr></table>";
             }
@@ -148,7 +149,9 @@ function getFasesPorProyecto(action, ID) {
             {
 
                 for (var i = 0; i < response.length; i++) {
-                    tabla += "<tr><td>" + response[i].text + response[i].value + "</td></tr>";
+                    var str = response[i].text;
+                    var res = str.split("||");
+                    tabla += "<tr><td>" + res[0] + "</td><td>" + res[1] + "</td><td>" + response[i].value + "</td><td><a class='btn btn-success' data-toggle='modal' data-target='#modalEditar' onclick=getFase('" + response[i].value + "','../../Fases/GetFase')>Editar</a></td></tr>";
                 }
                 tabla += "</table>";
             }
@@ -178,6 +181,7 @@ function crearFase(action) {
         success: function (response) {
             if (response === "OK") {
                 getFasesPorProyecto('../GetFasesPorProyecto', $('input[name=IdObra]')[0].value);
+                $('#modalAgregar').modal('hide');
             }
             else {
                 $('#mensajenuevo').html("No se puede guardar la fase.");
@@ -188,5 +192,77 @@ function crearFase(action) {
             alert("Error: " + errorThrown);
             alert(action);
         }  
+    });
+
+    $('input[name=IdFase]')[0].value="";
+    $('input[name=Fase]')[0].value="";
+
+}
+
+
+function actualizarFase(action) {
+    //Obtener los datos ingresados en los inputs respectivos
+    IdFase = $('input[name=EIdFase]')[0].value;
+    Fase = $('input[name=EFase]')[0].value;
+    IdProyecto = $('input[name=EIdProyecto]')[0].value;
+    var Id = 0;
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {
+            IdProyecto, IdFase, Fase
+        },
+        success: function (response) {
+            if (response === "OK") {
+                getFasesPorProyecto('../../Fases/GetFasesPorProyecto', $('input[name=IdObra]')[0].value);
+                $('#modalEditar').modal('hide');
+            }
+            else {
+                $('#Emensajenuevo').html("No se puede guardar la fase.");
+            }
+        }
+        ,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error: " + errorThrown);
+            alert(action);
+        }
+    });
+
+    $('input[name=IdFase]')[0].value = "";
+    $('input[name=Fase]')[0].value = "";
+
+}
+
+
+function mostrarFase(response) {
+    items = response;
+    cont5 = 0;
+
+    $.each(items, function (index, val) {
+        $('input[name=EIdFase]').val(val.idFase);
+        $('input[name=EFase]').val(val.fase);
+        $('input[name=EIdProyecto]').val(val.idProyecto);
+
+        //Mostrar los detalles del usuario
+        $("#EIdFase").text(val.idFase);
+        $("#EFase").text(val.fase);
+        $("#EIdProyecto").text(val.idProyecto);
+
+    });
+}
+
+function getFase(id, action) {
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: { id },
+        success: function (response) {
+            mostrarFase(response);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error: " + errorThrown);
+            alert(action);
+        }  
+
     });
 }
