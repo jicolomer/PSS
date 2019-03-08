@@ -138,7 +138,7 @@ function getFasesPorProyecto(action, ID) {
     $.ajax({
         type: "POST",
         url: action,
-        data: {ID},
+        data: { ID },
         success: function (response) {
             var tabla = "";
             tabla = "<table border='1' style='border-collapse:collapse;'>";
@@ -151,13 +151,20 @@ function getFasesPorProyecto(action, ID) {
                 for (var i = 0; i < response.length; i++) {
                     var str = response[i].text;
                     var res = str.split("||");
-                    tabla += "<tr><td>" + res[0] + "</td><td>" + res[1] + "</td><td>" + response[i].value + "</td><td><a class='btn btn-success' data-toggle='modal' data-target='#modalEditar' onclick=getFase('" + response[i].value + "','../../Fases/GetFase')>Editar</a></td></tr>";
+                    tabla += "<tr><td>" + res[0] + "</td><td>" + res[1] + "</td><td>" + response[i].value + "</td>";
+                    tabla += "<td><a class='btn btn-success' data-toggle='modal' data-target='#modalEditar' onclick=getFase('" + response[i].value + "','../../Fases/GetFase')>Editar</a></td >";
+                    tabla += "<td><a class='btn btn-danger' data-toggle='modal' data-target='#modalEliminar' onclick=getFase('" + response[i].value + "','../../Fases/GetFase')>Eliminar</a></td >";
+                    tabla += "</tr > ";
                 }
                 tabla += "</table>";
             }
             document.getElementById('TFases').innerHTML = tabla;
 
-        }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error: " + errorThrown);
+            alert(action);
+        }  
     });
 }
 
@@ -205,16 +212,16 @@ function actualizarFase(action) {
     IdFase = $('input[name=EIdFase]')[0].value;
     Fase = $('input[name=EFase]')[0].value;
     IdProyecto = $('input[name=EIdProyecto]')[0].value;
-    var Id = 0;
+    var Id = $('input[name=EId]')[0].value;
     $.ajax({
         type: "POST",
         url: action,
         data: {
-            IdProyecto, IdFase, Fase
+            Id, IdProyecto, IdFase, Fase
         },
         success: function (response) {
             if (response === "OK") {
-                getFasesPorProyecto('../../Fases/GetFasesPorProyecto', $('input[name=IdObra]')[0].value);
+                getFasesPorProyecto('../GetFasesPorProyecto', IdProyecto);
                 $('#modalEditar').modal('hide');
             }
             else {
@@ -228,8 +235,10 @@ function actualizarFase(action) {
         }
     });
 
-    $('input[name=IdFase]')[0].value = "";
-    $('input[name=Fase]')[0].value = "";
+    $('input[name=EIdFase]')[0].value = "";
+    $('input[name=EFase]')[0].value = "";
+    $('input[name=EIdProyecto]')[0].value = "";
+    $('input[name=EId]')[0].value = "";
 
 }
 
@@ -242,11 +251,13 @@ function mostrarFase(response) {
         $('input[name=EIdFase]').val(val.idFase);
         $('input[name=EFase]').val(val.fase);
         $('input[name=EIdProyecto]').val(val.idProyecto);
+        $('input[name=EId]').val(val.id);
 
         //Mostrar los detalles del usuario
         $("#EIdFase").text(val.idFase);
         $("#EFase").text(val.fase);
         $("#EIdProyecto").text(val.idProyecto);
+        $("#EId").text(val.id);
 
     });
 }
@@ -266,3 +277,5 @@ function getFase(id, action) {
 
     });
 }
+
+//~

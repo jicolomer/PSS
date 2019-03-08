@@ -192,7 +192,7 @@ namespace PSS.Controllers
 
         
 
-           public async Task<string> ActualizarFasePorProyecto(String IdProyecto, String IdFase, String Fase)
+           public async Task<string> ActualizarFasePorProyecto(String Id, String IdProyecto, String IdFase, String Fase)
         {
             var resp = "";
             try
@@ -200,6 +200,7 @@ namespace PSS.Controllers
 
                 Fases fase = new Fases
                 {
+                    Id = int.Parse(Id),
                     IdProyecto = int.Parse(IdProyecto),
                     IdFase = IdFase,
                     Fase = Fase
