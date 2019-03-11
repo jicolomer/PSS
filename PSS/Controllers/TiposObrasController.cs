@@ -10,85 +10,85 @@ using PSS.Models;
 
 namespace PSS.Controllers
 {
-    public class ProvinciasController : Controller
+    public class TiposObrasController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ProvinciasController(ApplicationDbContext context)
+        public TiposObrasController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Provincias
+        // GET: TiposObras
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Provincias.ToListAsync());
+            return View(await _context.TiposObra.ToListAsync());
         }
 
-        // GET: Provincias/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: TiposObras/Details/5
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var provincias = await _context.Provincias
-                .SingleOrDefaultAsync(m => m.IdProvincia == id);
-            if (provincias == null)
+            var tiposObra = await _context.TiposObra
+                .SingleOrDefaultAsync(m => m.IdTipoObra == id);
+            if (tiposObra == null)
             {
                 return NotFound();
             }
 
-            return View(provincias);
+            return View(tiposObra);
         }
 
-        // GET: Provincias/Create
+        // GET: TiposObras/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Provincias/Create
+        // POST: TiposObras/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdProvincia,Provincia")] Provincias provincias)
+        public async Task<IActionResult> Create([Bind("IdTipoObra,TipoObra")] TiposObra tiposObra)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(provincias);
+                _context.Add(tiposObra);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(provincias);
+            return View(tiposObra);
         }
 
-        // GET: Provincias/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: TiposObras/Edit/5
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var provincias = await _context.Provincias.SingleOrDefaultAsync(m => m.IdProvincia == id);
-            if (provincias == null)
+            var tiposObra = await _context.TiposObra.SingleOrDefaultAsync(m => m.IdTipoObra == id);
+            if (tiposObra == null)
             {
                 return NotFound();
             }
-            return View(provincias);
+            return View(tiposObra);
         }
 
-        // POST: Provincias/Edit/5
+        // POST: TiposObras/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdProvincia,Provincia")] Provincias provincias)
+        public async Task<IActionResult> Edit(string id, [Bind("IdTipoObra,TipoObra")] TiposObra tiposObra)
         {
-            if (id != provincias.IdProvincia)
+            if (id != tiposObra.IdTipoObra)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace PSS.Controllers
             {
                 try
                 {
-                    _context.Update(provincias);
+                    _context.Update(tiposObra);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProvinciasExists(provincias.IdProvincia))
+                    if (!TiposObraExists(tiposObra.IdTipoObra))
                     {
                         return NotFound();
                     }
@@ -113,59 +113,41 @@ namespace PSS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(provincias);
+            return View(tiposObra);
         }
 
-        // GET: Provincias/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: TiposObras/Delete/5
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var provincias = await _context.Provincias
-                .SingleOrDefaultAsync(m => m.IdProvincia == id);
-            if (provincias == null)
+            var tiposObra = await _context.TiposObra
+                .SingleOrDefaultAsync(m => m.IdTipoObra == id);
+            if (tiposObra == null)
             {
                 return NotFound();
             }
 
-            return View(provincias);
+            return View(tiposObra);
         }
 
-        // POST: Provincias/Delete/5
+        // POST: TiposObras/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var provincias = await _context.Provincias.SingleOrDefaultAsync(m => m.IdProvincia == id);
-            _context.Provincias.Remove(provincias);
+            var tiposObra = await _context.TiposObra.SingleOrDefaultAsync(m => m.IdTipoObra == id);
+            _context.TiposObra.Remove(tiposObra);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProvinciasExists(int id)
+        private bool TiposObraExists(string id)
         {
-            return _context.Provincias.Any(e => e.IdProvincia == id);
+            return _context.TiposObra.Any(e => e.IdTipoObra == id);
         }
-
-        public List<SelectListItem> GetProvincias()
-        {
-            List<SelectListItem> Provs = new List<SelectListItem>();
-            var provs = _context.Provincias.OrderBy(m => m.Provincia).ToList();
-            foreach (var Data in provs)
-            {
-                Provs.Add(new SelectListItem()
-                {
-                    Value = Data.IdProvincia.ToString(),
-                    Text = Data.Provincia
-                });
-
-            }
-            return Provs;
-
-        }
-
     }
 }

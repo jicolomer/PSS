@@ -11,9 +11,10 @@ using System;
 namespace PSS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190311132920_TiposObra")]
+    partial class TiposObra
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -342,20 +343,6 @@ namespace PSS.Migrations
                     b.HasKey("IdObra");
 
                     b.ToTable("Proyectos");
-                });
-
-            modelBuilder.Entity("PSS.Models.TiposObra", b =>
-                {
-                    b.Property<string>("IdTipoObra")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("TipoObra")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.HasKey("IdTipoObra");
-
-                    b.ToTable("TiposObra");
                 });
 
             modelBuilder.Entity("PSS.Models.UsuarioEmpresa", b =>

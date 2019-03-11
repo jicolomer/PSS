@@ -35,5 +35,7 @@ namespace PSS.Data
 
         public DbSet<PSS.Models.Fases> Fases { get; set; }
 
+        public DbSet<PSS.Models.TiposObra> TiposObra { get; set; }
+
     }
 }

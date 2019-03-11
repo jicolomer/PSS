@@ -294,7 +294,10 @@
                                     <td width="40%">
                                         <div class="form-group">
                                             <label asp-for="TipoObra" class="control-label"></label>
-                                            <input asp-for="TipoObra" class="form-control" />
+                                            <select id="SelectTipoObra" name="SelectTipoObra" class="form-control" onselect="" onclick="getTipoObra('../GetTipoObra');">
+                                                <option value="0">Seleccione un Tipo de Obra</option>
+                                            </select>
+                                            <input asp-for="TipoObra" class="form-control" style="display:none;" />
                                             <span asp-validation-for="TipoObra" class="text-danger"></span>
                                         </div>
                                     </td>
@@ -486,10 +489,21 @@
 
                         </div>
                         <div id="DFases" class="tab-pane">
-                            <a class="btn btn-primary" data-toggle="modal" data-target="#modalAgregar">Agregar</a>
+                           
                             <br />
                             <br />
-                            <div id="TFases" name="TFases"></div>
+                            <table>
+                                <tr>
+
+                                    <td width="50%">
+                                        <div id="TFases" name="TFases" ></div>
+                                    </td>
+                                    <td width="50%">
+                                        <div id="TAreas" name="TAreas" ></div>
+                                    </td>
+                                </tr>
+                            </table>
+
                         </div>
                     </div>
 

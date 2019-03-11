@@ -233,6 +233,23 @@ namespace PSS.Controllers
             return resultado;
         }
 
+        public async Task<List<SelectListItem>> GetTipoObra()
+        {
+            List<SelectListItem> Coleccion = new List<SelectListItem>();
+            var elementos = _context.TiposObra.OrderBy(m =>m.TipoObra).ToList();
+            foreach (var Data in elementos)
+            {
+                Coleccion.Add(new SelectListItem()
+                {
+                    Value = Data.IdTipoObra.ToString(),
+                    Text = Data.TipoObra
+                });
+
+            }
+            return Coleccion;
+
+
+        }
 
 
     }

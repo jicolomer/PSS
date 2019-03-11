@@ -3,12 +3,16 @@ var cont2 = 0;
 var cont3 = 0;
 var cont4 = 0;
 var cont5 = 0;
+var cont6 = 0;
+var cont7 = 0;
 
 function CargaProyectos() {
     getProvinciasID('../../Provincias/GetProvincias', $('input[name=ProvinciaObra]')[0].value);
     getTipoEstudiosID('../GetTiposEstudio', $('input[name=TipoEstudio]')[0].value);
     getPresupuestosID('../GetPresupuestos', $('input[name=PemPec]')[0].value);
     getFasesPorProyecto('../GetFasesPorProyecto', $('input[name=IdObra]')[0].value);
+    getTipoObraID('../getTipoObra', $('input[name=TipoObra]')[0].value);
+    getTipoProyecto('../getTipoProyecto', $('input[name=TipoProyecto]')[0].value);
 
 
 }
@@ -18,6 +22,7 @@ function CompruebaProyectos() {
     $('input[name=TipoEstudio]')[0].value = document.getElementById('SelectTipoEstudio').value;
     $('input[name=ProvinciaObra]')[0].value = document.getElementById('SelectProvinciaObra').value;
     $('input[name=PemPec]')[0].value = document.getElementById('SelectPresupuesto').value;
+    $('input[name=TipoObra]')[0].value = document.getElementById('SelectTipoObra').value;
 
     var txt;
     var r = confirm("Realmente desea grabar?");
@@ -60,7 +65,6 @@ function getProvincias(action) {
         }
     });
 }
-
 function getProvinciasID(action,ID) {
 
     $.ajax({
@@ -95,9 +99,6 @@ function getTipoEstudiosID(action,ID) {
         }
     });
 }
-
-
-
 function getPresupuestosID(action, ID) {
 
     $.ajax({
@@ -131,8 +132,6 @@ function getPresupuestos(action) {
         }
     });
 }
-
-
 function getFasesPorProyecto(action, ID) {
 
     $.ajax({
@@ -141,9 +140,11 @@ function getFasesPorProyecto(action, ID) {
         data: { ID },
         success: function (response) {
             var tabla = "";
-            tabla = "<table border='1' style='border-collapse:collapse;'>";
+            tabla = "<table border='0' class='table' width='100%'>";
             if (response.length == 0) {
-                tabla += "<tr><td>NO EXISTEN FASES ASOCIADAS</td></tr></table>";
+                tabla += "<tr><td>NO EXISTEN FASES ASOCIADAS</td></tr>";
+                tabla += "<tr><td><a class='btn btn-primary' data-toggle='modal' data-target='#modalAgregar'>Agregar</a></td> ";
+                tabla += "</table>";
             }
             else
             {
@@ -152,13 +153,15 @@ function getFasesPorProyecto(action, ID) {
                     var str = response[i].text;
                     var res = str.split("||");
                     tabla += "<tr><td>" + res[0] + "</td><td>" + res[1] + "</td><td>" + response[i].value + "</td>";
-                    tabla += "<td><a class='btn btn-success' data-toggle='modal' data-target='#modalEditar' onclick=getFase('" + response[i].value + "','../../Fases/GetFase')>Editar</a></td >";
-                    tabla += "<td><a class='btn btn-danger' data-toggle='modal' data-target='#modalEliminar' onclick=getFase('" + response[i].value + "','../../Fases/GetFase')>Eliminar</a></td >";
+                    tabla += "<td><a class='btn btn-success' data-toggle='modal' data-target='#modalEditar' onclick=getFase('" + response[i].value + "','../../Fases/GetFase')>Editar</a></td><td> | </td>";
+                    tabla += "<td><a class='btn btn-danger' data-toggle='modal' data-target='#modalEliminar' onclick=getFase('" + response[i].value + "','../../Fases/GetFase')>Eliminar</a></td><td> | </td>";
+                    tabla += "<td><a class='btn btn-warning' data-toggle='modal' data-target='#modalAreas' onclick=getArea('" + response[i].value + "','../../Fases/GetFase')> &nbsp;Áreas&nbsp;&nbsp; </a></td >";
                     tabla += "</tr > ";
                 }
+                tabla += "</tr></tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><a class='btn btn-primary' data-toggle='modal' data-target='#modalAgregar'>Agregar</a></td> ";
                 tabla += "</table>";
             }
-            document.getElementById('TFases').innerHTML = tabla;
+            document.getElementById('TFases').innerHTML = "FASES:<br><br>" + tabla;
 
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -205,8 +208,6 @@ function crearFase(action) {
     $('input[name=Fase]')[0].value="";
 
 }
-
-
 function actualizarFase(action) {
     //Obtener los datos ingresados en los inputs respectivos
     IdFase = $('input[name=EIdFase]')[0].value;
@@ -241,8 +242,6 @@ function actualizarFase(action) {
     $('input[name=EId]')[0].value = "";
 
 }
-
-
 function mostrarFase(response) {
     items = response;
     cont5 = 0;
@@ -261,7 +260,6 @@ function mostrarFase(response) {
 
     });
 }
-
 function getFase(id, action) {
     $.ajax({
         type: "POST",
@@ -275,6 +273,44 @@ function getFase(id, action) {
             alert(action);
         }  
 
+    });
+}
+function getTipoObra(action) {
+
+
+    if (cont6 != 0) {
+        return;
+    }
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {},
+        success: function (response) {
+            for (var i = 0; i < response.length; i++) {
+                document.getElementById('SelectTipoObra').options[i] = new Option(response[i].text, response[i].value);
+            }
+            cont6 = 1;
+        }
+    });
+}
+function getTipoObraID(action, ID) {
+
+
+    if (cont7 != 0) {
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {},
+        success: function (response) {
+            for (var i = 0; i < response.length; i++) {
+                if (ID != response[i].value) document.getElementById('SelectTipoObra').options[i] = new Option(response[i].text, response[i].value, false, false);
+                else document.getElementById('SelectTipoObra').options[i] = new Option(response[i].text, response[i].value, false, true);
+            }
+            cont7 = 1;
+        }
     });
 }
 
