@@ -15,3 +15,94 @@
 
         }
 		Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+
+		
+
+        public async Task<List<Actividades>> GetActividades(string id)
+        {
+
+            List<Actividades> lista = new List<Actividades>();
+            try
+            {
+                //Declaro un objeto list que depende la clase Usuario
+                var obj = await _context.Actividades.SingleOrDefaultAsync(m => m.Id == int.Parse(id));
+
+                lista.Add(new Actividades()
+                {
+                    Id = obj.Id,
+                    IdProyecto = obj.IdProyecto,
+                    IdActividad = obj.IdActividad,
+                    Actividad = obj.Actividad,
+                    Descripcion = obj.Descripcion
+                });
+
+            }
+            catch (Exception ex)
+            {
+                String a = ex.Message;
+            }
+            return lista;
+        }
+
+        public async Task<string> ActualizarActividadPorProyecto(String Id, String IdActividad, String Actividad, String Descripcion)
+        {
+            var resp = "";
+            try
+            {
+
+                Actividades myActividad = new Actividades
+                {
+                    Id = int.Parse(Id),
+                    IdActividad = IdActividad,
+                    Actividad = Actividad,
+                    Descripcion = Descripcion
+
+                };
+                //Actualizamos los datos
+                _context.Update(Actividad);
+                await _context.SaveChangesAsync();
+
+                resp = "OK";
+            }
+            catch (Exception ex2)
+            {
+                resp = ex2.Message;
+
+            }
+            return resp;
+
+        }
+
+        public async Task<string> CrearActividadPorProyecto(String IdFase, String IdActividad, String Actividad, String Descripcion)
+        {
+            string resp = "OK";
+            try
+            {
+                Actividades myActividad = new Actividades();
+                myActividad.IdFase = int.Parse(IdFase);
+                myActividad.IdActividad = IdActividad;
+                myActividad.Actividad = Actividad;
+                myActividad.Descripcion = Descripcion;
+                if (ModelState.IsValid)
+                {
+                    _context.Actividades.Add(myActividad);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    resp = "Error: Modelo inválido.";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                resp = "Error: " + ex.Message;
+            }
+
+
+            return resp;
+        }
+
+    }
+}

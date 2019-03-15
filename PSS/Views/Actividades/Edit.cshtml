@@ -1,0 +1,49 @@
+﻿@model PSS.Models.Actividades
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Actividades</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="IdFase" class="control-label"></label>
+                <input asp-for="IdFase" class="form-control" />
+                <span asp-validation-for="IdFase" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdActividad" class="control-label"></label>
+                <input asp-for="IdActividad" class="form-control" />
+                <span asp-validation-for="IdActividad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Actividad" class="control-label"></label>
+                <input asp-for="Actividad" class="form-control" />
+                <span asp-validation-for="Actividad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

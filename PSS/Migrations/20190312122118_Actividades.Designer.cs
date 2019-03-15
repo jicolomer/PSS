@@ -11,9 +11,10 @@ using System;
 namespace PSS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190312122118_Actividades")]
+    partial class Actividades
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,17 +134,19 @@ namespace PSS.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Actividad")
+                    b.Property<string>("Area")
                         .IsRequired()
                         .HasMaxLength(250);
 
                     b.Property<string>("Descripcion")
                         .HasMaxLength(250);
 
-                    b.Property<string>("IdActividad")
+                    b.Property<string>("IdArea")
                         .HasMaxLength(3);
 
                     b.Property<int>("IdFase");
+
+                    b.Property<int>("IdProyecto");
 
                     b.HasKey("Id");
 

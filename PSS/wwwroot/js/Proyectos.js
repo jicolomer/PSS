@@ -12,12 +12,10 @@ function CargaProyectos() {
     getPresupuestosID('../GetPresupuestos', $('input[name=PemPec]')[0].value);
     getFasesPorProyecto('../GetFasesPorProyecto', $('input[name=IdObra]')[0].value);
     getTipoObraID('../getTipoObra', $('input[name=TipoObra]')[0].value);
-    getTipoProyecto('../getTipoProyecto', $('input[name=TipoProyecto]')[0].value);
+    //getTipoProyecto('../getTipoProyecto', $('input[name=TipoProyecto]')[0].value);
 
 
 }
-
-
 function CompruebaProyectos() {
     $('input[name=TipoEstudio]')[0].value = document.getElementById('SelectTipoEstudio').value;
     $('input[name=ProvinciaObra]')[0].value = document.getElementById('SelectProvinciaObra').value;
@@ -33,6 +31,7 @@ function CompruebaProyectos() {
     }
 
 }
+
 function getTipoEstudios(action) {
 
     $.ajax({
@@ -132,6 +131,45 @@ function getPresupuestos(action) {
         }
     });
 }
+function getTipoObra(action) {
+
+
+    if (cont6 != 0) {
+        return;
+    }
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {},
+        success: function (response) {
+            for (var i = 0; i < response.length; i++) {
+                document.getElementById('SelectTipoObra').options[i] = new Option(response[i].text, response[i].value);
+            }
+            cont6 = 1;
+        }
+    });
+}
+function getTipoObraID(action, ID) {
+
+
+    if (cont7 != 0) {
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {},
+        success: function (response) {
+            for (var i = 0; i < response.length; i++) {
+                if (ID != response[i].value) document.getElementById('SelectTipoObra').options[i] = new Option(response[i].text, response[i].value, false, false);
+                else document.getElementById('SelectTipoObra').options[i] = new Option(response[i].text, response[i].value, false, true);
+            }
+            cont7 = 1;
+        }
+    });
+}
+
 function getFasesPorProyecto(action, ID) {
 
     $.ajax({
@@ -155,7 +193,7 @@ function getFasesPorProyecto(action, ID) {
                     tabla += "<tr><td>" + res[0] + "</td><td>" + res[1] + "</td><td>" + response[i].value + "</td>";
                     tabla += "<td><a class='btn btn-success' data-toggle='modal' data-target='#modalEditar' onclick=getFase('" + response[i].value + "','../../Fases/GetFase')>Editar</a></td><td> | </td>";
                     tabla += "<td><a class='btn btn-danger' data-toggle='modal' data-target='#modalEliminar' onclick=getFase('" + response[i].value + "','../../Fases/GetFase')>Eliminar</a></td><td> | </td>";
-                    tabla += "<td><a class='btn btn-warning' data-toggle='modal' data-target='#modalAreas' onclick=getArea('" + response[i].value + "','../../Fases/GetFase')> &nbsp;Áreas&nbsp;&nbsp; </a></td >";
+                    tabla += "<td><a class='btn btn-warning' data-toggle='modal' data-target='#modalAreas' onclick=getActividadesPorFase('../../Actividades/getActividadesPorFase','" + response[i].value + "','" + res[0] + "')> &nbsp;Áreas&nbsp;&nbsp; </a></td >";
                     tabla += "</tr > ";
                 }
                 tabla += "</tr></tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><a class='btn btn-primary' data-toggle='modal' data-target='#modalAgregar'>Agregar</a></td> ";
@@ -275,42 +313,164 @@ function getFase(id, action) {
 
     });
 }
-function getTipoObra(action) {
 
+function marcaFase(id)
+{
+    alert("a")
+    $('input[name=AIdFase]').val(id); 
+    alert("b")
 
-    if (cont6 != 0) {
-        return;
-    }
+}
+function getActividadesPorFase(action, ID,nombre) {
     $.ajax({
         type: "POST",
         url: action,
-        data: {},
+        data: { ID },
         success: function (response) {
-            for (var i = 0; i < response.length; i++) {
-                document.getElementById('SelectTipoObra').options[i] = new Option(response[i].text, response[i].value);
+            var tabla = "";
+            tabla = "<table border='0' class='table' width='100%'>";
+            if (response.length == 0) {
+                tabla += "<tr><td>NO EXISTEN ACTIVIDADES ASOCIADAS</td></tr>";
+                tabla += "<tr><td><a class='btn btn-primary' data-toggle='modal' onclick=marcaFase(" + ID + ") data-target='#modalAgregarActividad'>Agregar</a></td> ";
+                tabla += "</table>";
             }
-            cont6 = 1;
+            else {
+
+                for (var i = 0; i < response.length; i++) {
+                    var str = response[i].text;
+                    var res = str.split("||");
+                    tabla += "<tr><td>" + res[0] + "</td><td>" + res[1] + "</td><td>" + res[2] + "</td><td>" + response[i].value + "</td>";
+                    tabla += "<td><a class='btn btn-success' data-toggle='modal' data-target='#modalEditarActividad' onclick=getActividad('" + response[i].value + "','../../Actividades/GetActividad')>Editar</a></td><td> | </td>";
+                    tabla += "<td><a class='btn btn-danger' data-toggle='modal' data-target='#modalEliminarActividad' onclick=getActividad('" + response[i].value + "','../../Actividades/GetActividad')>Eliminar</a></td><td> | </td>";
+                    tabla += "</tr > ";
+                }
+                tabla += "</tr></tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><a class='btn btn-primary' data-toggle='modal' data-target='#modalAgregar'>Agregar</a></td> ";
+                tabla += "</table>";
+            }
+            document.getElementById('TActividades').innerHTML = "ACTIVIDADES DE LA FASE: " + nombre + "<br><br>" + tabla;
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error: " + errorThrown);
+            alert(action);
         }
     });
 }
-function getTipoObraID(action, ID) {
 
+function crearFase(action) {
 
-    if (cont7 != 0) {
-        return;
-    }
+    var IdActividad;
+    var Actividad;
+    var Descripcion;
+    var IdFase;
+
+    //Obtener los datos ingresados en los inputs respectivos
+    IdFase = $('input[name=AIdFase]')[0].value;
+    IdActividad = $('input[name=AIdActividad]')[0].value;
+    Actividad = $('input[name=AActividad]')[0].value;
+    Descripcion = $('input[name=ADescripcion]')[0].value;
+    var Id = 0;
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {
+            IdFase, IdActividad, Actividad, Descripcion
+        },
+        success: function (response) {
+            if (response === "OK") {
+                getFasesPorProyecto('../GetActividadesPorFase', IdFase);
+                $('#modalAgregarActividad').modal('hide');
+            }
+            else {
+                $('#mensajenuevoActividad').html("No se puede guardar la actividad.");
+            }
+        }
+        ,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error: " + errorThrown);
+            alert(action);
+        }
+    });
+
+    $('input[name=AIdFase]')[0].value = "";
+    $('input[name=AIdActividad]')[0].value = "";
+    $('input[name=AActividad]')[0].value = "";
+    $('input[name=ADescripcion]')[0].value = "";
+
+}
+function actualizarActividad(action) {
+    var IdActividad;
+    var Actividad;
+    var Descripcion;
+    var Id;
+
+    //Obtener los datos ingresados en los inputs respectivos
+    Id = $('input[name=EAId]')[0].value;
+    IdActividad = $('input[name=EAIdActividad]')[0].value;
+    Actividad = $('input[name=EAActividad]')[0].value;
+    Descripcion = $('input[name=EADescripcion]')[0].value;
 
     $.ajax({
         type: "POST",
         url: action,
-        data: {},
+        data: {
+            Id, IdActividad, Actividad, Descripcion
+        },
         success: function (response) {
-            for (var i = 0; i < response.length; i++) {
-                if (ID != response[i].value) document.getElementById('SelectTipoObra').options[i] = new Option(response[i].text, response[i].value, false, false);
-                else document.getElementById('SelectTipoObra').options[i] = new Option(response[i].text, response[i].value, false, true);
+            if (response === "OK") {
+                getFasesPorProyecto('../GetActividadesPorFase', IdFase);
+                $('#modalEditarActividad').modal('hide');
             }
-            cont7 = 1;
+            else {
+                $('#EmensajenuevoActividad').html("No se puede guardar la fase.");
+            }
         }
+        ,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error: " + errorThrown);
+            alert(action);
+        }
+    });
+
+    $('input[name=EAIdDescripcion]')[0].value = "";
+    $('input[name=EAIdActividad]')[0].value = "";
+    $('input[name=EAActividad]')[0].value = "";
+    $('input[name=EAId]')[0].value = "";
+
+}
+function mostrarActividad(response) {
+    items = response;
+    cont5 = 0;
+
+    $.each(items, function (index, val) {
+        $('input[name=EAIdFase]').val(val.idFase);
+        $('input[name=EAActividad]').val(val.Actividad);
+        $('input[name=EAIdActividad]').val(val.IdActividad);
+        $('input[name=EAId]').val(val.id);
+        $('input[name=EADescripcion]').val(val.Descripcion);
+
+        //Mostrar los detalles del usuario
+        $("#EAIdActividad").text(val.IdActividad);
+        $("#EAActividad").text(val.Actividad);
+        $("#EADescripcion").text(val.Descripcion);
+        $("#EAIdFase").text(val.idFase);
+        $("#EAId").text(val.id);
+
+    });
+}
+function getActividad(id, action) {
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: { id },
+        success: function (response) {
+            mostrarActividad(response);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error: " + errorThrown);
+            alert(action);
+        }
+
     });
 }
 

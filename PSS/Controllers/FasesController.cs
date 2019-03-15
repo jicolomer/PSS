@@ -50,34 +50,6 @@ namespace PSS.Controllers
         }
 
 
-        public async Task<string> CrearFasePorProyecto(String IdProyecto, String IdFase, String Fase)
-        {
-            string resp = "OK";
-            try
-            {
-                Fases fase = new Fases();
-                fase.IdFase = IdFase;
-                fase.IdProyecto = int.Parse(IdProyecto);
-                fase.Fase = Fase;
-                if (ModelState.IsValid)
-                {
-                    _context.Fases.Add(fase);
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    resp = "Error: Modelo inválido." ;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                resp = "Error: " + ex.Message; 
-            }
-
-
-            return resp;
-        }
 
         // GET: Fases/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -188,38 +160,63 @@ namespace PSS.Controllers
             }
             return lista;
         }
-
-
         
-
-           public async Task<string> ActualizarFasePorProyecto(String Id, String IdProyecto, String IdFase, String Fase)
+        public async Task<string> ActualizarFasePorProyecto(String Id, String IdProyecto, String IdFase, String Fase)
+    {
+        var resp = "";
+        try
         {
-            var resp = "";
-            try
+
+            Fases fase = new Fases
             {
+                Id = int.Parse(Id),
+                IdProyecto = int.Parse(IdProyecto),
+                IdFase = IdFase,
+                Fase = Fase
+            };
+            //Actualizamos los datos
+            _context.Update(fase);
+            await _context.SaveChangesAsync();
 
-                Fases fase = new Fases
-                {
-                    Id = int.Parse(Id),
-                    IdProyecto = int.Parse(IdProyecto),
-                    IdFase = IdFase,
-                    Fase = Fase
-                };
-                //Actualizamos los datos
-                _context.Update(fase);
-                await _context.SaveChangesAsync();
-
-                resp = "OK";
-            }
-            catch (Exception ex2)
-            {
-                resp = ex2.Message;
-
-            }
-            return resp;
+            resp = "OK";
+        }
+        catch (Exception ex2)
+        {
+            resp = ex2.Message;
 
         }
+        return resp;
 
+    }
+
+        public async Task<string> CrearFasePorProyecto(String IdProyecto, String IdFase, String Fase)
+        {
+            string resp = "OK";
+            try
+            {
+                Fases fase = new Fases();
+                fase.IdFase = IdFase;
+                fase.IdProyecto = int.Parse(IdProyecto);
+                fase.Fase = Fase;
+                if (ModelState.IsValid)
+                {
+                    _context.Fases.Add(fase);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    resp = "Error: Modelo inválido.";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                resp = "Error: " + ex.Message;
+            }
+
+
+            return resp;
+        }
 
     }
 }

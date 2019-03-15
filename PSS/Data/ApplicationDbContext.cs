@@ -37,5 +37,7 @@ namespace PSS.Data
 
         public DbSet<PSS.Models.TiposObra> TiposObra { get; set; }
 
+        public DbSet<PSS.Models.Actividades> Actividades { get; set; }
+
     }
 }

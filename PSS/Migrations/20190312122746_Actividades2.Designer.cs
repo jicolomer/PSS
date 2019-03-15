@@ -11,9 +11,10 @@ using System;
 namespace PSS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190312122746_Actividades2")]
+    partial class Actividades2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,6 +145,8 @@ namespace PSS.Migrations
                         .HasMaxLength(3);
 
                     b.Property<int>("IdFase");
+
+                    b.Property<int>("IdProyecto");
 
                     b.HasKey("Id");
 
