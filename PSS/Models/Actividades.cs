@@ -6,10 +6,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace PSS.Models
 {
-    public class Actividades
+
+    public class Actividades 
     {
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
         public int Id { get; set; }
+
         public int IdFase { get; set; }
 
 
@@ -23,6 +25,9 @@ namespace PSS.Models
         [Display(Name = "Descripción")]
         [StringLength(250, MinimumLength = 3, ErrorMessage = "El campo debe tener entre 3 y 250 caracteres")]
         public string Descripcion { get; set; }
+
+        [NotMapped]
+        public virtual string Fase { get; set; }
 
     }
 }

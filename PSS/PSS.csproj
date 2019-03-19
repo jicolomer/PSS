@@ -42,6 +42,8 @@
     <Compile Remove="Migrations\20190226152813_Proyectos2.Designer.cs" />
     <Compile Remove="Migrations\20190226153201_Proyectos3.cs" />
     <Compile Remove="Migrations\20190226153201_Proyectos3.Designer.cs" />
+    <Compile Remove="Migrations\20190318180331_20190318b.cs" />
+    <Compile Remove="Migrations\20190318180331_20190318b.Designer.cs" />
     <Compile Remove="Migrations\PSSContextModelSnapshot.cs" />
     <Compile Remove="Models\PSSContext_old.cs" />
   </ItemGroup>

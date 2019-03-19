@@ -103,15 +103,15 @@ namespace PSS.Controllers
         }
 
         // GET: Fases/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? ID)
         {
-            if (id == null)
+            if (ID == null)
             {
                 return NotFound();
             }
 
             var fases = await _context.Fases
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == ID);
             if (fases == null)
             {
                 return NotFound();

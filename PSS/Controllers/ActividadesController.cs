@@ -117,15 +117,15 @@ namespace PSS.Controllers
         }
 
         // GET: Actividades/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? ID)
         {
-            if (id == null)
+            if (ID == null)
             {
                 return NotFound();
             }
 
             var actividades = await _context.Actividades
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == ID);
             if (actividades == null)
             {
                 return NotFound();
@@ -187,13 +187,15 @@ namespace PSS.Controllers
             {
                 //Declaro un objeto list que depende la clase Usuario
                 var obj = await _context.Actividades.SingleOrDefaultAsync(m => m.Id == int.Parse(id));
+                var fas = await _context.Fases.SingleOrDefaultAsync(m => m.Id == obj.Id);
 
                 lista.Add(new Actividades()
                 {
                     Id = obj.Id,
                     IdActividad = obj.IdActividad,
                     Actividad = obj.Actividad,
-                    Descripcion = obj.Descripcion
+                    Descripcion = obj.Descripcion,
+                    Fase = fas.Fase
                 });
 
             }
@@ -233,7 +235,7 @@ namespace PSS.Controllers
 
         }
 
-        public async Task<string> CrearActividadPorProyecto(String IdFase, String IdActividad, String Actividad, String Descripcion)
+        public async Task<string> CrearActividadPorFase(String IdFase, String IdActividad, String Actividad, String Descripcion)
         {
             string resp = "OK";
             try

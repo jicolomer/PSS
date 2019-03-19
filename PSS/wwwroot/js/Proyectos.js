@@ -169,7 +169,6 @@ function getTipoObraID(action, ID) {
         }
     });
 }
-
 function getFasesPorProyecto(action, ID) {
 
     $.ajax({
@@ -208,8 +207,6 @@ function getFasesPorProyecto(action, ID) {
         }  
     });
 }
-
-
 var IdFase;
 var Fase;
 var IdProyecto;
@@ -314,14 +311,7 @@ function getFase(id, action) {
     });
 }
 
-function marcaFase(id)
-{
-    alert("a")
-    $('input[name=AIdFase]').val(id); 
-    alert("b")
-
-}
-function getActividadesPorFase(action, ID,nombre) {
+function getActividadesPorFase(action, ID, nombre) {
     $.ajax({
         type: "POST",
         url: action,
@@ -338,10 +328,9 @@ function getActividadesPorFase(action, ID,nombre) {
 
                 for (var i = 0; i < response.length; i++) {
                     var str = response[i].text;
-                    var res = str.split("||");
-                    tabla += "<tr><td>" + res[0] + "</td><td>" + res[1] + "</td><td>" + res[2] + "</td><td>" + response[i].value + "</td>";
-                    tabla += "<td><a class='btn btn-success' data-toggle='modal' data-target='#modalEditarActividad' onclick=getActividad('" + response[i].value + "','../../Actividades/GetActividad')>Editar</a></td><td> | </td>";
-                    tabla += "<td><a class='btn btn-danger' data-toggle='modal' data-target='#modalEliminarActividad' onclick=getActividad('" + response[i].value + "','../../Actividades/GetActividad')>Eliminar</a></td><td> | </td>";
+                    tabla += "<tr><td title='" + response[i].descripcion + "'>" + response[i].actividad + "</td><td>" + response[i].idActividad + "</td><td>" + response[i].id + "</td>";
+                    tabla += "<td><a class='btn btn-success' data-toggle='modal' data-target='#modalEditarActividad' onclick=getActividad('" + response[i].id + "','../../Actividades/GetActividad')>Editar</a></td><td> | </td>";
+                    tabla += "<td><a class='btn btn-danger' data-toggle='modal' data-target='#modalEliminarActividad' onclick=getActividad('" + response[i].id + "','../../Actividades/GetActividad')>Eliminar</a></td>";
                     tabla += "</tr > ";
                 }
                 tabla += "</tr></tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><a class='btn btn-primary' data-toggle='modal' data-target='#modalAgregar'>Agregar</a></td> ";
@@ -356,8 +345,14 @@ function getActividadesPorFase(action, ID,nombre) {
         }
     });
 }
+function marcaFase(id)
+{
+    alert("a")
+    $('input[name=AIdFase]').val(id); 
+    alert("b")
 
-function crearFase(action) {
+}
+function crearActividad(action) {
 
     var IdActividad;
     var Actividad;
@@ -378,7 +373,7 @@ function crearFase(action) {
         },
         success: function (response) {
             if (response === "OK") {
-                getFasesPorProyecto('../GetActividadesPorFase', IdFase);
+                getActividadesPorFase('../GetActividadesPorFase', IdFase);
                 $('#modalAgregarActividad').modal('hide');
             }
             else {
@@ -456,6 +451,9 @@ function mostrarActividad(response) {
         $("#EAIdFase").text(val.idFase);
         $("#EAId").text(val.id);
 
+        $('input[name=EId2]').val(val.id);
+        $('input[name=ENombreFase2]').val(val.fase);
+
     });
 }
 function getActividad(id, action) {
@@ -474,4 +472,47 @@ function getActividad(id, action) {
     });
 }
 
+
+function eliminarActividad(action) {
+    var ID = $('input[name=EId2]')[0].value;
+    var nombreFase = $('input[name=ENombreFase2]')[0].value;
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: { ID },
+        success: function (response) {
+            if (response === "Delete") {
+                getActividadesPorFase('../GetActividadesPorFase', nombreFase);
+                $('#modalAgregarActividad').modal('hide');
+            }
+            else {
+                alert("No se puede eliminar el registro");
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error: " + errorThrown);
+            alert(action);
+        }
+    });
+}
+function eliminarFase(action) {
+    var ID = $('input[name=EIdFase]')[0].value;
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: { ID },
+        success: function (response) {
+            if (response === "Delete") {
+                window.location.href = "Proyectos";
+            }
+            else {
+                alert("No se puede eliminar el registro");
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error: " + errorThrown);
+            alert(action);
+        }
+    });
+}
 //~
