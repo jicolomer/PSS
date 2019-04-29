@@ -1,0 +1,243 @@
+﻿@model Penelope.Pacientes
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Pacientes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellid1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Apellid1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellid2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Apellid2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fechanac)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fechanac)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Dni)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Dni)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Paisresi)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Paisresi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Domicont)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Domicont)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Poblares)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Poblares)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Provresi)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Provresi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Codpost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Codpost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefono2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telefono2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Numeross1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Numeross1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Numeross2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Numeross2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Numeross3)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Numeross3)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sexo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sexo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Numtis)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Numtis)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Raza)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Raza)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Provinac)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Provinac)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Poblanac)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Poblanac)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Autonaci)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Autonaci)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Autoresi)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Autoresi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Paisnaci)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Paisnaci)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Estcivil)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Estcivil)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telecont)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telecont)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Estadopa)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Estadopa)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecestad)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fecestad)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Centap)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Centap)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Historiap)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Historiap)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Cip)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Cip)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefonoap)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telefonoap)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telreuma1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telreuma1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telreuma1anot)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telreuma1anot)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telreuma2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telreuma2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telreuma2anot)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telreuma2anot)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Anotaciones)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Anotaciones)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Numerohc" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
