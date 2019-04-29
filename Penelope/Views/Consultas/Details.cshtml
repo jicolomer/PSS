@@ -1,0 +1,102 @@
+﻿@model Penelope.Consulta
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Consulta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Numerohc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Numerohc)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FecConsulta)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FecConsulta)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CodAgenda)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CodAgenda)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdHorario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdHorario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CodPrestacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CodPrestacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Coddestino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Coddestino)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Codpers)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Codpers)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PendienteSf)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PendienteSf)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Artocentresis)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Artocentresis)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Infiltración)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Infiltración)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Destino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Destino)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Seguimiento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Seguimiento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoAr)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EstadoAr)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ConsultaId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
